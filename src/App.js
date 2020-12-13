@@ -14,7 +14,9 @@ function App() {
         <div>
           {loading
             ? "loading"
-            : data.events.map((event, index) => <p key={index}>{event.artistName}</p>)}
+            : data.events.map((event, index) => (
+                <p key={index}>{event.artistName}</p>
+              ))}
         </div>
       </header>
     </div>
