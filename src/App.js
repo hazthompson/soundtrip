@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { EVENTS_QUERY } from "./utils/queries";
+import { EVENTS_QUERY } from "utils/queries";
 import { useQuery } from "@apollo/client";
 
 function App() {
