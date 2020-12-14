@@ -1,24 +1,34 @@
-import logo from "./logo.svg";
-import "./App.css";
-import { EVENTS_QUERY } from "utils/queries";
-import { useQuery } from "@apollo/client";
+import EventsList from 'components/EventsList';
+import { makeStyles } from '@material-ui/core/styles';
+import GlobalStyles from 'assets/GlobalStyles';
+
+const appStyles = makeStyles({
+  App: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(12, 1fr)',
+    backgroundColor: `${GlobalStyles.backgroundColor}`,
+    minHeight: '100vh',
+  },
+  App__header: {
+    gridColumn: '1 /span 12',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '30px',
+    color: `${GlobalStyles.titleColor}`,
+    fontWeight: 'bolder',
+  },
+});
 
 function App() {
-  const { loading, data } = useQuery(EVENTS_QUERY);
-
+  const classes = appStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className={classes.App}>
+      <header className={classes.App__header}>
         <p>Soundtrip</p>
-        <div>
-          {loading
-            ? "loading"
-            : data.events.map((event, index) => (
-                <p key={index}>{event.artistName}</p>
-              ))}
-        </div>
       </header>
+      <EventsList />
     </div>
   );
 }
