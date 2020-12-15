@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { EVENTS_QUERY } from 'utils/queries';
 import { useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
@@ -46,7 +47,7 @@ function EventsList() {
               src={event.imageUrl}
             />
             <p>{event.artistName}</p>
-            <p>{event.date}</p>
+            <p>{moment(event.date).format('MMM Do YYYY')}</p>
             <p>Venue: {event.venue}</p>
             <p>
               Buy tickets here:{' '}
