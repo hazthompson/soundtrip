@@ -14,8 +14,10 @@ const eventListStyles = makeStyles({
     gridColumn: '2 /span 3',
   },
   eventLists__eventContainer: {
+    padding: '1%',
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     color: 'white',
+    marginBottom: '10px',
   },
   eventList__ticketLink: {
     color: 'white',
@@ -27,6 +29,10 @@ const eventListStyles = makeStyles({
   eventList__image: {
     width: '200px',
     height: '150px',
+  },
+
+  eventList_artistName: {
+    fontWeight: 600,
   },
 });
 
@@ -46,10 +52,12 @@ function EventsList() {
               alt={event.artistName}
               src={event.imageUrl}
             />
-            <p>{event.artistName}</p>
+            <div className={classes.eventList_artistName}>
+              {event.artistName}
+            </div>
             <p>{moment(event.date).format('MMM Do YYYY')}</p>
-            <p>Venue: {event.venue}</p>
-            <p>
+            <div>Venue: {event.venue}</div>
+            <div>
               Buy tickets here:{' '}
               <a
                 href={event.url}
@@ -59,7 +67,7 @@ function EventsList() {
               >
                 {event.url}
               </a>
-            </p>
+            </div>
           </div>
         ))
       )}
