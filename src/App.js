@@ -1,6 +1,7 @@
-import EventsList from 'components/EventsList';
 import { makeStyles } from '@material-ui/core/styles';
 import GlobalStyles from 'assets/GlobalStyles';
+import EventsList from 'components/EventsList';
+import Playlist from 'components/Playlist';
 
 const appStyles = makeStyles({
   App: {
@@ -12,7 +13,6 @@ const appStyles = makeStyles({
   },
   App__header: {
     fontFamily: `${GlobalStyles.headerFont}`,
-
     gridColumn: '1 /span 12',
     display: 'flex',
     flexDirection: 'column',
@@ -29,6 +29,7 @@ function App() {
     <div className={classes.App}>
       <header className={classes.App__header}>Soundtrip</header>
       <EventsList />
+      <Playlist />
     </div>
   );
 }
