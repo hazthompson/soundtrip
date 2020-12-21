@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import GlobalStyles from 'assets/GlobalStyles';
 import EventsList from 'components/EventsList';
 import Playlist from 'components/Playlist';
+import Map from 'components/Map';
 
 const appStyles = makeStyles({
   App: {
@@ -29,6 +30,7 @@ function App() {
     <div className={classes.App}>
       <header className={classes.App__header}>Soundtrip</header>
       <EventsList />
+      <Map />
       <Playlist />
     </div>
   );
