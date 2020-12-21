@@ -1,9 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 import GlobalStyles from 'assets/GlobalStyles';
 import EventsList from 'components/EventsList';
+import LocationFinder from 'components/LocationFinder';
 import Playlist from 'components/Playlist';
+import Navbar from 'components/Navbar';
 
-const appStyles = makeStyles({
+const useStyles = makeStyles({
   App: {
     fontFamily: `${GlobalStyles.bodyFont}`,
     display: 'grid',
@@ -24,11 +26,12 @@ const appStyles = makeStyles({
 });
 
 function App() {
-  const classes = appStyles();
+  const classes = useStyles();
   return (
     <div className={classes.App}>
-      <header className={classes.App__header}>Soundtrip</header>
+      <Navbar />
       <EventsList />
+      <LocationFinder />
       <Playlist />
     </div>
   );
