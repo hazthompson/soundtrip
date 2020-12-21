@@ -23,25 +23,22 @@ const useStyles = makeStyles((theme) => ({
     color: `${GlobalStyles.titleColor}`,
   },
 
-  Navar__locationContainer: {
+  Navbar__locationContainer: {
     fontFamily: `${GlobalStyles.headerFont}`,
-    justifySelf: 'center',
-    fontSize: '30px',
-    color: `${GlobalStyles.titleColor}`,
     display: 'flex',
+    justifyContent: 'center',
+    fontSize: '30px',
   },
   Navbar__icon: {
     fontFamily: `${GlobalStyles.headerFont}`,
-    justifySelf: 'center',
-    color: `${GlobalStyles.titleColor}`,
+    alignSelf: 'center',
+    display: 'inline',
   },
   Navbar__location: {
     fontFamily: `${GlobalStyles.headerFont}`,
-    justifySelf: 'center',
-    fontSize: '30px',
+
     color: `${GlobalStyles.titleColor}`,
     display: 'inline',
-    fontWeight: '300',
   },
 }));
 
@@ -56,7 +53,7 @@ function Navbar() {
         </Typography>
         <div className={classes.Navbar__locationContainer}>
           <LocationOnIcon />
-          <p className={classes.Navbar__location}>Vancouver, BC</p>
+          <span className={classes.Navbar__location}>Vancouver, BC</span>
         </div>
       </Toolbar>
     </AppBar>
