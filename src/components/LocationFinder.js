@@ -12,7 +12,11 @@ import { geocodeByAddress } from 'react-places-autocomplete';
 const autocompleteService = { current: null };
 
 const useStyles = makeStyles((theme) => ({
-  icon: {
+  locationFinder: {
+    gridColumn: '5 /span 4',
+    justifySelf: 'Center',
+  },
+  locationFinder__icon: {
     color: theme.palette.text.secondary,
     marginRight: theme.spacing(2),
   },
@@ -91,6 +95,7 @@ export default function LocationFinder() {
 
   return (
     <Autocomplete
+      className={classes.locationFinder}
       id='google-map-location-search'
       style={{ width: 300 }}
       getOptionLabel={(option) =>
@@ -125,7 +130,7 @@ export default function LocationFinder() {
         return (
           <Grid container alignItems='center'>
             <Grid item>
-              <LocationOnIcon className={classes.icon} />
+              <LocationOnIcon className={classes.locationFinder__icon} />
             </Grid>
             <Grid item xs>
               {parts.map((part, index) => (
