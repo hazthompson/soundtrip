@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
+import { geocodeByAddress } from 'react-places-autocomplete';
 
 const autocompleteService = { current: null };
 
@@ -22,6 +23,7 @@ export default function LocationFinder() {
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState([]);
+  const [latLng, setLatLng] = useState({});
 
   const fetch = useMemo(
     () =>
@@ -67,6 +69,26 @@ export default function LocationFinder() {
     };
   }, [value, inputValue, fetch]);
 
+  function handleSelect(value) {
+    geocodeByAddress(value)
+      .then((results) => {
+        setLatLng({
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng(),
+        });
+      })
+      .then(() => console.log('Success', latLng))
+      .catch((error) => console.error('Error', error));
+  }
+
+  const handleChange = (event, newValue) => {
+    setOptions(newValue ? [newValue, ...options] : options);
+    setValue(newValue);
+    if (newValue.description) {
+      handleSelect(newValue.description);
+    }
+  };
+
   return (
     <Autocomplete
       id='google-map-location-search'
@@ -80,11 +102,7 @@ export default function LocationFinder() {
       includeInputInList
       filterSelectedOptions
       value={value}
-      onChange={(event, newValue) => {
-        setOptions(newValue ? [newValue, ...options] : options);
-        setValue(newValue);
-        console.log('thing', value);
-      }}
+      onChange={handleChange}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
