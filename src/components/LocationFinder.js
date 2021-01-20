@@ -84,7 +84,7 @@ export default function LocationFinder() {
   const handleChange = (event, newValue) => {
     setOptions(newValue ? [newValue, ...options] : options);
     setValue(newValue);
-    if (newValue.description) {
+    if (newValue) {
       handleSelect(newValue.description);
     }
   };
