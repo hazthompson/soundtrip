@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   Navbar__container: {
     gridColumn: '1 /span 12',
     backgroundColor: `${GlobalStyles.backgroundColor}`,
+    marginBottom: '10px',
   },
   Navbar__toolbar: {
     display: 'grid',
