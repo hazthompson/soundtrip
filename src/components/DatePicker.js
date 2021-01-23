@@ -1,7 +1,5 @@
 import 'date-fns';
-import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-// import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -10,7 +8,6 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   datePicker: {
-    // gridColumn: '5 /span 4',
     justifySelf: 'Center',
 
     // MuiInputBaseRoot: {
@@ -19,11 +16,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DatePicker() {
+export default function DatePicker({ selectedDate, setSelectedDate }) {
   const classes = useStyles();
-  const [selectedDate, setSelectedDate] = useState(
-    new Date('2014-08-18T21:11:54')
-  );
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -36,7 +30,7 @@ export default function DatePicker() {
         <KeyboardDatePicker
           margin='normal'
           id='date-picker-dialog'
-          label='Date picker dialog'
+          label='Choose your date'
           format='dd/MM/yyyy'
           value={selectedDate}
           onChange={handleDateChange}

@@ -13,7 +13,6 @@ const autocompleteService = { current: null };
 
 const useStyles = makeStyles((theme) => ({
   locationFinder: {
-    // gridColumn: '5 /span 4',
     justifySelf: 'Center',
   },
   locationFinder__icon: {
@@ -22,12 +21,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LocationFinder() {
+export default function LocationFinder({ setLatLng }) {
   const classes = useStyles();
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState([]);
-  const [latLng, setLatLng] = useState({});
 
   const fetch = useMemo(
     () =>
@@ -81,7 +79,7 @@ export default function LocationFinder() {
           lng: results[0].geometry.location.lng(),
         });
       })
-      .then(() => console.log('Success', latLng))
+      .then(() => console.log('Success'))
       .catch((error) => console.error('Error', error));
   }
 
