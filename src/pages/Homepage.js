@@ -3,6 +3,8 @@ import LocationFinder from 'components/LocationFinder';
 import Playlist from 'components/Playlist';
 import DatePicker from 'components/DatePicker';
 import { makeStyles } from '@material-ui/core/styles';
+import { EVENTS_QUERY } from 'utils/queries';
+import { useQuery } from '@apollo/client';
 
 const eventListStyles = makeStyles({
   homepage: {
@@ -20,17 +22,21 @@ const eventListStyles = makeStyles({
 
 function Homepage() {
   const classes = eventListStyles();
-
-  return (
-    <div className={classes.homepage}>
-      <EventsList />
-      <div className={classes.homepage__locationDateContainer}>
-        <LocationFinder />
-        <DatePicker />
+  const { data: eventsData, loading: loadingEvents } = useQuery(EVENTS_QUERY);
+  if (loadingEvents) {
+    return <p className={classes.eventLists__loading}>'loading'</p>;
+  } else {
+    return (
+      <div className={classes.homepage}>
+        <EventsList eventsData={eventsData} />
+        <div className={classes.homepage__locationDateContainer}>
+          <LocationFinder />
+          <DatePicker />
+        </div>
+        <Playlist />
       </div>
-      <Playlist />
-    </div>
-  );
+    );
+  }
 }
 
 export default Homepage;
