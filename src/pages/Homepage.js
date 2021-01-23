@@ -1,6 +1,7 @@
 import EventsList from 'components/EventsList';
 import LocationFinder from 'components/LocationFinder';
 import Playlist from 'components/Playlist';
+import DatePicker from 'components/DatePicker';
 import { makeStyles } from '@material-ui/core/styles';
 
 const eventListStyles = makeStyles({
@@ -18,6 +19,7 @@ function Homepage() {
     <div className={classes.homepage}>
       <EventsList />
       <LocationFinder />
+      <DatePicker />
       <Playlist />
     </div>
   );
