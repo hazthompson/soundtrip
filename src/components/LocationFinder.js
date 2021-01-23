@@ -13,7 +13,7 @@ const autocompleteService = { current: null };
 
 const useStyles = makeStyles((theme) => ({
   locationFinder: {
-    gridColumn: '5 /span 4',
+    // gridColumn: '5 /span 4',
     justifySelf: 'Center',
   },
   locationFinder__icon: {

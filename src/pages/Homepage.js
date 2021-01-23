@@ -10,6 +10,12 @@ const eventListStyles = makeStyles({
     gridTemplateColumns: 'repeat(12, 1fr)',
     justifySelf: 'center',
   },
+  homepage__locationDateContainer: {
+    display: 'grid',
+    gridTemplateRows: '150px 1fr',
+    gridColumn: '6 /span 2',
+    justifyContent: 'center',
+  },
 });
 
 function Homepage() {
@@ -18,8 +24,10 @@ function Homepage() {
   return (
     <div className={classes.homepage}>
       <EventsList />
-      <LocationFinder />
-      <DatePicker />
+      <div className={classes.homepage__locationDateContainer}>
+        <LocationFinder />
+        <DatePicker />
+      </div>
       <Playlist />
     </div>
   );
