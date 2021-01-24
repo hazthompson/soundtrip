@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const EVENTS_QUERY = gql`
-  query Events {
-    events {
+  query Events($startDate: ISO8601DateTime) {
+    events(startDate: $startDate) {
       artistName
       venue
       url
