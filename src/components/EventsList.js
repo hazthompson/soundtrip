@@ -36,11 +36,14 @@ const eventListStyles = makeStyles({
   },
 });
 
-function EventsList({ startDate }) {
-  console.log('DSTSDIUHF', startDate);
+function EventsList({ startDate, latLng }) {
   const classes = eventListStyles();
   const { data: eventsData, loading: loadingEvents } = useQuery(EVENTS_QUERY, {
-    variables: { startDate },
+    variables: {
+      startDate,
+      lat: latLng.lat.toString(),
+      lng: latLng.lng.toString(),
+    },
   });
 
   if (loadingEvents) {
