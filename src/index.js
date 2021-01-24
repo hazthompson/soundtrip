@@ -11,11 +11,11 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </React.StrictMode>,
+  // <React.StrictMode> commenting this out as bug issues - will replace once a fix has come in
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

@@ -6,7 +6,7 @@ import Navbar from 'components/Navbar';
 const useStyles = makeStyles({
   App: {
     fontFamily: `${GlobalStyles.bodyFont}`,
-    backgroundColor: `${GlobalStyles.backgroundColor}`,
+    // backgroundColor: `${GlobalStyles.backgroundColor}`,
     minHeight: '100vh',
   },
 });
