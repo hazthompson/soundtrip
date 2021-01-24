@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { EVENTS_QUERY } from 'utils/queries';
-import { useQuery } from '@apollo/client';
+
 import DatePicker from 'components/DatePicker';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -24,36 +23,31 @@ const eventListStyles = makeStyles({
 
 function Homepage() {
   const classes = eventListStyles();
-  const { data: eventsData, loading: loadingEvents } = useQuery(EVENTS_QUERY);
+
   const [latLng, setLatLng] = useState({});
-  const [selectedDate, setSelectedDate] = useState(
-    new Date('2014-08-18T21:11:54')
-  );
+  const [selectedDate, setSelectedDate] = useState();
 
   const handleSubmit = () => {
     console.log('LATLNG', latLng);
     console.log('current date', selectedDate);
   };
-  if (loadingEvents) {
-    return <p className={classes.eventLists__loading}>'loading'</p>;
-  } else {
-    return (
-      <div className={classes.homepage}>
-        <EventsList eventsData={eventsData} />
-        <div className={classes.homepage__locationDateContainer}>
-          <LocationFinder setLatLng={setLatLng} />
-          <DatePicker
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-          />
-          <Button onClick={handleSubmit} variant='contained'>
-            Submit
-          </Button>
-        </div>
-        <Playlist />
+
+  return (
+    <div className={classes.homepage}>
+      <EventsList startDate={selectedDate} />
+      <div className={classes.homepage__locationDateContainer}>
+        <LocationFinder setLatLng={setLatLng} />
+        <DatePicker
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+        <Button onClick={handleSubmit} variant='contained'>
+          Submit
+        </Button>
       </div>
-    );
-  }
+      <Playlist />
+    </div>
+  );
 }
 
 export default Homepage;
