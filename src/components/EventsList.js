@@ -36,7 +36,6 @@ const eventListStyles = makeStyles({
   },
 });
 
-  console.log('DSTSDIUHF', startDate);
 function EventsList({ startDate, latLng }) {
   const classes = eventListStyles();
   const { data: eventsData, loading: loadingEvents } = useQuery(EVENTS_QUERY, {
