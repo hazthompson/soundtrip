@@ -24,7 +24,7 @@ const eventListStyles = makeStyles({
 function Homepage() {
   const classes = eventListStyles();
 
-  const [latLng, setLatLng] = useState({});
+  const [latLng, setLatLng] = useState();
   const [selectedDate, setSelectedDate] = useState();
 
   const handleSubmit = () => {
@@ -34,7 +34,7 @@ function Homepage() {
 
   return (
     <div className={classes.homepage}>
-      <EventsList startDate={selectedDate} />
+      {latLng && <EventsList startDate={selectedDate} latLng={latLng} />}
       <div className={classes.homepage__locationDateContainer}>
         <LocationFinder setLatLng={setLatLng} />
         <DatePicker
