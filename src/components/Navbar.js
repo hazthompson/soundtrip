@@ -46,11 +46,16 @@ const useStyles = makeStyles((theme) => ({
 
 function Navbar() {
   const classes = useStyles();
-  const { data: userData, loading } = useUser();
+  const { data: userData, error, loading } = useUser();
 
   if (loading) {
-    <p>Loading</p>;
+    return <p>Loading</p>;
   }
+
+  if (error?.status === 401) {
+    console.log('error', error); //redirect with react router
+  }
+
   return (
     <AppBar position='static' className={classes.Navbar__container}>
       <Toolbar className={classes.Navbar__toolbar}>

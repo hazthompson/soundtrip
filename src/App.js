@@ -29,7 +29,7 @@ function App() {
       ) : (
         // Display the spotify login page
         <SpotifyAuth
-          redirectUri={process.env.REACT_APP_SPOTIFY_REDIRECT_URI_LIVE}
+          redirectUri={process.env.REACT_APP_SPOTIFY_REDIRECT_URI_LOCAL}
           clientID={process.env.REACT_APP_SPOTIFY_CLIENT_ID}
           scopes={[Scopes.userReadPrivate, 'user-read-email']}
         />
