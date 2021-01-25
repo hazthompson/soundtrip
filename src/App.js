@@ -1,3 +1,7 @@
+import { SpotifyApiContext } from 'react-spotify-api';
+import Cookies from 'js-cookie';
+import { SpotifyAuth, Scopes } from 'react-spotify-auth';
+import 'react-spotify-auth/dist/index.css';
 import { makeStyles } from '@material-ui/core/styles';
 import GlobalStyles from 'assets/GlobalStyles';
 import Homepage from 'pages/Homepage';
@@ -12,11 +16,24 @@ const useStyles = makeStyles({
 });
 
 function App() {
+  const token = Cookies.get('spotifyAuthToken');
   const classes = useStyles();
+
   return (
     <div className={classes.App}>
-      <Navbar />
-      <Homepage />
+      {token ? (
+        <SpotifyApiContext.Provider value={token}>
+          <Navbar />
+          <Homepage />
+        </SpotifyApiContext.Provider>
+      ) : (
+        // Display the spotify login page
+        <SpotifyAuth
+          redirectUri={process.env.REACT_APP_SPOTIFY_REDIRECT_URI}
+          clientID={process.env.REACT_APP_SPOTIFY_CLIENT_ID}
+          scopes={[Scopes.userReadPrivate, 'user-read-email']}
+        />
+      )}
     </div>
   );
 }
