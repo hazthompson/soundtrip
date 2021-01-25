@@ -18,9 +18,9 @@ const useStyles = makeStyles({
 function App() {
   const token = Cookies.get('spotifyAuthToken');
   const classes = useStyles();
+
   return (
     <div className={classes.App}>
-      {console.log('token', process.env.REACT_APP_SPOTIFY_REDIRECT_URI)}
       {token ? (
         <SpotifyApiContext.Provider value={token}>
           <Navbar />
@@ -31,7 +31,7 @@ function App() {
         <SpotifyAuth
           redirectUri={process.env.REACT_APP_SPOTIFY_REDIRECT_URI}
           clientID={process.env.REACT_APP_SPOTIFY_CLIENT_ID}
-          scopes={[Scopes.userReadPrivate, 'user-read-email']} // either style will work
+          scopes={[Scopes.userReadPrivate, 'user-read-email']}
         />
       )}
     </div>

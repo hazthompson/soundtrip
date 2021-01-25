@@ -1,4 +1,5 @@
 import React from 'react';
+import { useUser } from 'react-spotify-api';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -45,12 +46,16 @@ const useStyles = makeStyles((theme) => ({
 
 function Navbar() {
   const classes = useStyles();
+  const { data: userData, loading } = useUser();
 
+  if (loading) {
+    <p>Loading</p>;
+  }
   return (
     <AppBar position='static' className={classes.Navbar__container}>
       <Toolbar className={classes.Navbar__toolbar}>
         <Typography variant='h6' className={classes.Navbar__title}>
-          Soundtrip
+          {`Soundtrip - ${userData?.display_name}`}
         </Typography>
         <div className={classes.Navbar__locationContainer}>
           <LocationOnIcon />
