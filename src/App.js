@@ -15,6 +15,12 @@ const useStyles = makeStyles({
   },
 });
 
+//install reacter
+//set up a /login route which rendes the spotify auth set up a useEffect in this component that deletes that cookie (pass emptyarray so it happends on first render)
+//look at js-cookie docs to remove this (.remove?)
+//check for the 401 error and and then return redirect if it's present
+//finally when it hits /callback redirect to homepage
+
 function App() {
   const token = Cookies.get('spotifyAuthToken');
   const classes = useStyles();
