@@ -1,11 +1,17 @@
+import { useState, useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import { SpotifyApiContext } from 'react-spotify-api';
 import Cookies from 'js-cookie';
-import { SpotifyAuth, Scopes } from 'react-spotify-auth';
-import 'react-spotify-auth/dist/index.css';
 import { makeStyles } from '@material-ui/core/styles';
 import GlobalStyles from 'assets/GlobalStyles';
 import Homepage from 'pages/Homepage';
 import Navbar from 'components/Navbar';
+import AuthPage from 'components/AuthPage';
 
 const useStyles = makeStyles({
   App: {
@@ -16,25 +22,40 @@ const useStyles = makeStyles({
 });
 
 function App() {
-  const token = Cookies.get('spotifyAuthToken');
+  const [token, setToken] = useState();
   const classes = useStyles();
 
+  useEffect(() => {
+    setToken(Cookies.get('spotifyAuthToken'));
+  }, []);
+
   return (
-    <div className={classes.App}>
-      {token ? (
-        <SpotifyApiContext.Provider value={token}>
-          <Navbar />
-          <Homepage />
-        </SpotifyApiContext.Provider>
-      ) : (
-        // Display the spotify login page
-        <SpotifyAuth
-          redirectUri={process.env.REACT_APP_SPOTIFY_REDIRECT_URI_LIVE}
-          clientID={process.env.REACT_APP_SPOTIFY_CLIENT_ID}
-          scopes={[Scopes.userReadPrivate, 'user-read-email']}
-        />
-      )}
-    </div>
+    <Router>
+      <div className={classes.App}>
+        {token ? (
+          <SpotifyApiContext.Provider value={token}>
+            <Navbar />
+            <Switch>
+              <Route path='/' exact>
+                <Homepage />
+              </Route>
+              <Redirect to='/' />
+            </Switch>
+          </SpotifyApiContext.Provider>
+        ) : (
+          // Display the spotify login page
+          <Switch>
+            <Route path='/callback' exact>
+              <AuthPage />
+            </Route>
+            <Route path='/auth' exact>
+              <AuthPage />
+            </Route>
+            <Redirect to='/auth' />
+          </Switch>
+        )}
+      </div>
+    </Router>
   );
 }
 

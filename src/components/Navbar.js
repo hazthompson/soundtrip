@@ -1,11 +1,14 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useUser } from 'react-spotify-api';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import GlobalStyles from 'assets/GlobalStyles';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import Button from '@material-ui/core/Button';
+import Cookies from 'js-cookie';
+
+import GlobalStyles from 'assets/GlobalStyles';
 
 const useStyles = makeStyles((theme) => ({
   Navbar__container: {
@@ -44,13 +47,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function handleLogout() {
+  Cookies.remove('spotifyAuthToken');
+  window.location.href = '/auth'; // TODO: redirect with React Router instead
+}
+
 function Navbar() {
   const classes = useStyles();
-  const { data: userData, loading } = useUser();
+  const { data: userData, error, loading } = useUser();
+
+  useEffect(() => {
+    if (error?.status === 401) {
+      Cookies.remove('spotifyAuthToken');
+    }
+  }, [error]);
 
   if (loading) {
-    <p>Loading</p>;
+    return <p>Loading</p>;
   }
+
   return (
     <AppBar position='static' className={classes.Navbar__container}>
       <Toolbar className={classes.Navbar__toolbar}>
@@ -61,6 +76,9 @@ function Navbar() {
           <LocationOnIcon />
           <span className={classes.Navbar__location}>Vancouver, BC</span>
         </div>
+        <Button onClick={handleLogout} variant='contained'>
+          Logout
+        </Button>
       </Toolbar>
     </AppBar>
   );
