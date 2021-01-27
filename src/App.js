@@ -29,10 +29,6 @@ function App() {
     setToken(Cookies.get('spotifyAuthToken'));
   }, []);
 
-  useEffect(() => {
-    console.log('token', token);
-  }, [token]);
-
   return (
     <Router>
       <div className={classes.App}>
