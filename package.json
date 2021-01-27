@@ -24,7 +24,6 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-spotify-api": "^3.0.0",
-    "react-spotify-auth": "^1.2.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

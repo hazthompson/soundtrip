@@ -9458,13 +9458,6 @@ react-spotify-api@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-spotify-api/-/react-spotify-api-3.0.0.tgz#7a8d92ce76267fa757e2ea51321c0d60b25f7bf0"
   integrity sha512-q7X/fIBRVpx1iZfPocDl7Q7qv8nU+MFpMqQMMEcveQD9wQ8DWnDeSbkbiH9TW7NlyOc+G4IpuZ/9jk5Z306Itw==
 
-react-spotify-auth@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/react-spotify-auth/-/react-spotify-auth-1.2.1.tgz#42fe729976b4e67dc3b5617ef1669bf1b2236c4d"
-  integrity sha512-i8RJ38yyOiP+JOcm0h3wO0f/UHdWKEXZlf4dOy8VMMzpORWYwH256sK4oZtV9JkxZ+Pv9VF0Iye2LUUtRcQiCg==
-  dependencies:
-    prop-types "^15.7.2"
-
 react-transition-group@^4.0.0, react-transition-group@^4.4.0:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.1.tgz#63868f9325a38ea5ee9535d828327f85773345c9"

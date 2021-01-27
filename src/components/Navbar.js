@@ -5,10 +5,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import Button from '@material-ui/core/Button';
 import Cookies from 'js-cookie';
 
 import GlobalStyles from 'assets/GlobalStyles';
-// import LogoutRoute from 'components/LogoutRoute';
 
 const useStyles = makeStyles((theme) => ({
   Navbar__container: {
@@ -47,18 +47,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function handleLogout() {
+  Cookies.remove('spotifyAuthToken');
+  window.location.href = '/auth'; // TODO: redirect with React Router instead
+}
+
 function Navbar() {
   const classes = useStyles();
   const { data: userData, error, loading } = useUser();
-  console.log('error', error);
 
   useEffect(() => {
     if (error?.status === 401) {
-      console.log('1', Cookies.get('spotifyAuthToken'));
-      //  Cookies.remove('spotifyAuthToken');
-      // window.location.href = '/auth';
-      console.log('2', Cookies.get('spotifyAuthToken'));
-      // setHasRemovedCookie(true);
+      Cookies.remove('spotifyAuthToken');
     }
   }, [error]);
 
@@ -76,6 +76,9 @@ function Navbar() {
           <LocationOnIcon />
           <span className={classes.Navbar__location}>Vancouver, BC</span>
         </div>
+        <Button onClick={handleLogout} variant='contained'>
+          Logout
+        </Button>
       </Toolbar>
     </AppBar>
   );
