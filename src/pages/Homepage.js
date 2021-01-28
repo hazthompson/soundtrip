@@ -27,11 +27,6 @@ function Homepage() {
   const [latLng, setLatLng] = useState();
   const [selectedDate, setSelectedDate] = useState();
 
-  const handleSubmit = () => {
-    console.log('LATLNG', latLng);
-    console.log('current date', selectedDate);
-  };
-
   return (
     <div className={classes.homepage}>
       {latLng && <EventsList startDate={selectedDate} latLng={latLng} />}
@@ -41,9 +36,6 @@ function Homepage() {
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
         />
-        <Button onClick={handleSubmit} variant='contained'>
-          Submit
-        </Button>
       </div>
       <Playlist />
     </div>
