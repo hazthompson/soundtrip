@@ -5,7 +5,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-import { SpotifyApiContext, useUser } from 'react-spotify-api';
+import { SpotifyApiContext } from 'react-spotify-api';
 import Cookies from 'js-cookie';
 import { makeStyles } from '@material-ui/core/styles';
 import GlobalStyles from 'assets/GlobalStyles';
@@ -24,7 +24,6 @@ const useStyles = makeStyles({
 function App() {
   const [token, setToken] = useState();
   const classes = useStyles();
-  // const { data: userData } = useUser();
 
   useEffect(() => {
     setToken(Cookies.get('spotifyAuthToken'));

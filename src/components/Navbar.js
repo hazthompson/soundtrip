@@ -66,17 +66,9 @@ function Navbar() {
   }, [error]);
 
   useEffect(() => {
-    console.log('ALL COOKIES WHEN CREATING PLAYLIST ID?', Cookies.get());
-
     if (!Cookies.get('tempPlaylistID')) {
-      console.log('did you get in no tempPlatlist?');
       if (userData) {
-        console.log('but there is useDAta', userData);
         createTempPlaylist(userData.id);
-        console.log(
-          'is there a playlist id in cookies',
-          Cookies.get('tempPlaylistID')
-        );
       }
     }
   }, [userData]);

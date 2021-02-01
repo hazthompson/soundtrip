@@ -18,12 +18,7 @@ export const createTempPlaylist = (spotifyUserID) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('Success:', data);
-      console.log('playlist ID,', data.id);
       Cookies.set('tempPlaylistID', data.id);
-    })
-    .then(() => {
-      console.log('COOKIES AFTER SPOTIFY PLAYLIST CREATION', Cookies.get());
     })
     .catch((error) => {
       console.error('Error:', error);
