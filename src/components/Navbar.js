@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Button from '@material-ui/core/Button';
 import Cookies from 'js-cookie';
+import { deleteTempPlaylist } from 'utils/spotifyHelpers';
 
 import GlobalStyles from 'assets/GlobalStyles';
 
@@ -47,8 +48,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function handleLogout() {
+async function handleLogout() {
+  await deleteTempPlaylist(Cookies.get('tempPlaylistID'));
   Cookies.remove('spotifyAuthToken');
+  Cookies.remove('tempPlaylistID');
   window.location.href = '/auth'; // TODO: redirect with React Router instead
 }
 
