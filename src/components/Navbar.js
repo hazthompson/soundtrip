@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Button from '@material-ui/core/Button';
 import Cookies from 'js-cookie';
-import { deleteTempPlaylist } from 'utils/spotifyHelpers';
+import { deleteTempPlaylist, createTempPlaylist } from 'utils/spotifyHelpers';
 
 import GlobalStyles from 'assets/GlobalStyles';
 
@@ -64,6 +64,22 @@ function Navbar() {
       Cookies.remove('spotifyAuthToken');
     }
   }, [error]);
+
+  useEffect(() => {
+    console.log('ALL COOKIES?', Cookies.get());
+
+    if (!Cookies.get('tempPlaylistID')) {
+      console.log('did you get in no tempPlatlist?');
+      if (userData) {
+        console.log('but there is useDAta', userData);
+        createTempPlaylist(userData.id);
+        console.log(
+          'is there a playlist id in cookies',
+          Cookies.get('tempPlaylistID')
+        );
+      }
+    }
+  }, [userData]);
 
   if (loading) {
     return <p>Loading</p>;

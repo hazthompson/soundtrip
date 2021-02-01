@@ -36,16 +36,16 @@ function App() {
 
     if (!Cookies.get('tempPlaylistID')) {
       console.log('did you get in no tempPlatlist?');
-      if (token) {
-        console.log('but there is a token');
-        createTempPlaylist(userData?.id);
+      if (userData) {
+        console.log('but there is useDAta', userData);
+        createTempPlaylist(userData.id);
         console.log(
           'is there a playlist id in cookies',
           Cookies.get('tempPlaylistID')
         );
       }
     }
-  }, [token, userData]);
+  }, [userData]);
 
   return (
     <Router>

@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 
 export const createTempPlaylist = (spotifyUserID) => {
   const authToken = Cookies.get('spotifyAuthToken');
-  fetch(`https://api.spotify.com/v1/users/hazthomps/playlists`, {
+  fetch(`https://api.spotify.com/v1/users/${spotifyUserID}/playlists`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -21,6 +21,9 @@ export const createTempPlaylist = (spotifyUserID) => {
       console.log('Success:', data);
       console.log('playlist ID,', data.id);
       Cookies.set('tempPlaylistID', data.id);
+    })
+    .then(() => {
+      console.log('Success:', Cookies.get());
     })
     .catch((error) => {
       console.error('Error:', error);
