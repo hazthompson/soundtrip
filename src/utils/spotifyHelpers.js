@@ -45,3 +45,34 @@ export const deleteTempPlaylist = (playlist_id) => {
       console.error('Error:', error);
     });
 };
+
+//range length will be dynamic as will tracklist
+export const replacePlaylistTracks = (playlist_id) => {
+  const authToken = Cookies.get('spotifyAuthToken');
+  const tracks =
+    'spotify:track:1uP8UVMXcTJn28TbhfR2Wo,spotify:track:6BKVev5kACyEaolcJkaUbz,spotify:track:5kznDEv5T6VtN8FdIB1R5C,spotify:track:3qKgOxaVi0dUVV1vtrbH1K,spotify:track:3zIiZrCROmhS9ERPdEHXYa';
+  return fetch(
+    `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?uris=${tracks}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify({
+        range_start: 1,
+        insert_before: 1,
+        range_length: 5,
+      }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    }
+  )
+    .then(() => {
+      console.log('Success: playlist tracks replaces');
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+};
+
+//get list of tracks from spotify

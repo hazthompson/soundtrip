@@ -7,7 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Button from '@material-ui/core/Button';
 import Cookies from 'js-cookie';
-import { deleteTempPlaylist, createTempPlaylist } from 'utils/spotifyHelpers';
+import {
+  deleteTempPlaylist,
+  createTempPlaylist,
+  replacePlaylistTracks,
+} from 'utils/spotifyHelpers';
 
 import GlobalStyles from 'assets/GlobalStyles';
 
@@ -67,9 +71,13 @@ function Navbar() {
 
   useEffect(() => {
     if (!Cookies.get('tempPlaylistID')) {
-      if (userData) {
-        createTempPlaylist(userData.id);
+      async function createPlaylistWithInitialTracks() {
+        if (userData) {
+          await createTempPlaylist(userData.id);
+          replacePlaylistTracks(Cookies.get('tempPlaylistID'));
+        }
       }
+      createPlaylistWithInitialTracks();
     }
   }, [userData]);
 
