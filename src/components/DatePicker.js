@@ -21,7 +21,6 @@ export default function DatePicker({ selectedDate, setSelectedDate }) {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    console.log('date!', selectedDate);
   };
 
   return (
