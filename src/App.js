@@ -12,7 +12,6 @@ import GlobalStyles from 'assets/GlobalStyles';
 import Homepage from 'pages/Homepage';
 import Navbar from 'components/Navbar';
 import AuthPage from 'components/AuthPage';
-import { createTempPlaylist } from './utils/spotifyHelpers';
 
 const useStyles = makeStyles({
   App: {
@@ -25,27 +24,11 @@ const useStyles = makeStyles({
 function App() {
   const [token, setToken] = useState();
   const classes = useStyles();
-  const { data: userData } = useUser();
+  // const { data: userData } = useUser();
 
   useEffect(() => {
     setToken(Cookies.get('spotifyAuthToken'));
   }, []);
-
-  useEffect(() => {
-    console.log('ALL COOKIES?', Cookies.get());
-
-    if (!Cookies.get('tempPlaylistID')) {
-      console.log('did you get in no tempPlatlist?');
-      if (userData) {
-        console.log('but there is useDAta', userData);
-        createTempPlaylist(userData.id);
-        console.log(
-          'is there a playlist id in cookies',
-          Cookies.get('tempPlaylistID')
-        );
-      }
-    }
-  }, [userData]);
 
   return (
     <Router>

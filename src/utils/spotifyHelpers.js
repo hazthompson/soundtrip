@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 
 export const createTempPlaylist = (spotifyUserID) => {
   const authToken = Cookies.get('spotifyAuthToken');
-  fetch(`https://api.spotify.com/v1/users/${spotifyUserID}/playlists`, {
+  return fetch(`https://api.spotify.com/v1/users/${spotifyUserID}/playlists`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -23,7 +23,7 @@ export const createTempPlaylist = (spotifyUserID) => {
       Cookies.set('tempPlaylistID', data.id);
     })
     .then(() => {
-      console.log('Success:', Cookies.get());
+      console.log('COOKIES AFTER SPOTIFY PLAYLIST CREATION', Cookies.get());
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -32,14 +32,17 @@ export const createTempPlaylist = (spotifyUserID) => {
 
 export const deleteTempPlaylist = (playlist_id) => {
   const authToken = Cookies.get('spotifyAuthToken');
-  fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/followers`, {
-    method: 'DELETE',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`,
-    },
-  })
+  return fetch(
+    `https://api.spotify.com/v1/playlists/${playlist_id}/followers`,
+    {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    }
+  )
     .then(() => {
       console.log('Success: playlist deleted');
     })

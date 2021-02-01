@@ -52,7 +52,7 @@ async function handleLogout() {
   await deleteTempPlaylist(Cookies.get('tempPlaylistID'));
   Cookies.remove('spotifyAuthToken');
   Cookies.remove('tempPlaylistID');
-  window.location.href = '/auth'; // TODO: redirect with React Router instead
+  window.location.href = '/auth';
 }
 
 function Navbar() {
@@ -66,7 +66,7 @@ function Navbar() {
   }, [error]);
 
   useEffect(() => {
-    console.log('ALL COOKIES?', Cookies.get());
+    console.log('ALL COOKIES WHEN CREATING PLAYLIST ID?', Cookies.get());
 
     if (!Cookies.get('tempPlaylistID')) {
       console.log('did you get in no tempPlatlist?');

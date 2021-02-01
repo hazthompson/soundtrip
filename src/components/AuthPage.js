@@ -18,6 +18,9 @@ function AuthPage() {
     if (location.pathname === '/callback/') {
       const params = new URLSearchParams(location.hash.replace(/#/, ''));
       const token = params.get('access_token');
+      if (Cookies.get('tempPlaylistID')) {
+        Cookies.remove('tempPlaylistID');
+      }
       Cookies.set('spotifyAuthToken', token);
       window.location.href = '/'; // TODO: redirect with React Router instead
     }
