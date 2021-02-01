@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import DatePicker from 'components/DatePicker';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import EventsList from 'components/EventsList';
 import LocationFinder from 'components/LocationFinder';
 import Playlist from 'components/Playlist';
