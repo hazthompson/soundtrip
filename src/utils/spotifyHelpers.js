@@ -47,10 +47,10 @@ export const deleteTempPlaylist = (playlist_id) => {
 };
 
 //range length will be dynamic as will tracklist
-export const replacePlaylistTracks = (playlist_id) => {
+export const replacePlaylistTracks = (playlist_id, tracks) => {
   const authToken = Cookies.get('spotifyAuthToken');
-  const tracks =
-    'spotify:track:1uP8UVMXcTJn28TbhfR2Wo,spotify:track:6BKVev5kACyEaolcJkaUbz,spotify:track:5kznDEv5T6VtN8FdIB1R5C,spotify:track:3qKgOxaVi0dUVV1vtrbH1K,spotify:track:3zIiZrCROmhS9ERPdEHXYa';
+  // const tracksTest =
+  //   'spotify:track:1uP8UVMXcTJn28TbhfR2Wo,spotify:track:6BKVev5kACyEaolcJkaUbz,spotify:track:5kznDEv5T6VtN8FdIB1R5C,spotify:track:3qKgOxaVi0dUVV1vtrbH1K,spotify:track:3zIiZrCROmhS9ERPdEHXYa';
   return fetch(
     `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?uris=${tracks}`,
     {
@@ -76,3 +76,34 @@ export const replacePlaylistTracks = (playlist_id) => {
 };
 
 //get list of tracks from spotify
+export const setPlaylistTrackList = async (currentArtists) => {
+  const authToken = Cookies.get('spotifyAuthToken');
+
+  const trackUris = await Promise.all(
+    currentArtists.map(async (artist) => {
+      const response = await fetch(
+        `https://api.spotify.com/v1/search?q=${artist}&type=track&market=CA&limit=2`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      const data = await response.json();
+
+      console.log('Success: playlist tracks replaces');
+      // data.tracks.items.forEach((item) => {
+      //   console.log('URI', item.uri);
+      //   // trackList.push(item.uri);
+      // });
+
+      return data.tracks.items.map((item) => item.uri);
+    })
+  );
+
+  console.log('FINAL TRACK LIST', trackUris);
+  return trackUris.flat();
+};
