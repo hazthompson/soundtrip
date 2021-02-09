@@ -7,7 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Button from '@material-ui/core/Button';
 import Cookies from 'js-cookie';
-import { deleteTempPlaylist, createTempPlaylist } from 'utils/spotifyHelpers';
+import {
+  deleteTempPlaylist,
+  createTempPlaylist,
+  replacePlaylistTracks,
+  getArtistId,
+  getArtistsTopSongs,
+} from 'utils/spotifyHelpers';
 
 import GlobalStyles from 'assets/GlobalStyles';
 
@@ -65,11 +71,30 @@ function Navbar() {
     }
   }, [error]);
 
+  const fetchTopSongs = async (artistsNames) => {
+    const topSongs = await Promise.all(
+      artistsNames.map(async (artist) => {
+        const id = await getArtistId(artist);
+        return await getArtistsTopSongs(id);
+      })
+    );
+    return topSongs.flat();
+  };
+
+  //create initial playlist with initial tracks
   useEffect(() => {
-    if (!Cookies.get('tempPlaylistID')) {
-      if (userData) {
-        createTempPlaylist(userData.id);
-      }
+    if (!Cookies.get('tempPlaylistID') && userData?.id) {
+      const artistsNames = ['Madonna', 'Abba'];
+      let tracklist = [];
+      createTempPlaylist(userData.id).then(() => {
+        const playlistID = Cookies.get('tempPlaylistID');
+        fetchTopSongs(artistsNames).then((response) => {
+          tracklist = response.join(',');
+          console.log('tracks2322', tracklist);
+
+          replacePlaylistTracks(playlistID, tracklist);
+        });
+      });
     }
   }, [userData]);
 
