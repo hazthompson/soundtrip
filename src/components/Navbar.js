@@ -11,7 +11,6 @@ import {
   deleteTempPlaylist,
   createTempPlaylist,
   replacePlaylistTracks,
-  setPlaylistTrackListByKeyword,
   getArtistId,
   getArtistsTopSongs,
 } from 'utils/spotifyHelpers';
@@ -82,29 +81,20 @@ function Navbar() {
     return topSongs.flat();
   };
 
-  useEffect(() => {
-    const artistsNames = ['Madonna', 'Abba'];
-    const playlistID = Cookies.get('tempPlaylistID');
-    let tracklist = [];
-    fetchTopSongs(artistsNames).then((response) => {
-      tracklist = response.join(',');
-      console.log('tracks2322', tracklist);
-
-      replacePlaylistTracks(playlistID, tracklist);
-      //Now sen
-    });
-  }, []);
-
-  async function createPlaylistWithInitialTracks(userDataID) {
-    await createTempPlaylist(userDataID);
-    const playlistID = Cookies.get('tempPlaylistID');
-    const tracklist = await setPlaylistTrackListByKeyword(['Abba', 'Madonna']);
-    replacePlaylistTracks(playlistID, tracklist);
-  }
-
+  //create initial playlist with initial tracks
   useEffect(() => {
     if (!Cookies.get('tempPlaylistID') && userData?.id) {
-      createPlaylistWithInitialTracks(userData.id);
+      const artistsNames = ['Madonna', 'Abba'];
+      let tracklist = [];
+      createTempPlaylist(userData.id).then(() => {
+        const playlistID = Cookies.get('tempPlaylistID');
+        fetchTopSongs(artistsNames).then((response) => {
+          tracklist = response.join(',');
+          console.log('tracks2322', tracklist);
+
+          replacePlaylistTracks(playlistID, tracklist);
+        });
+      });
     }
   }, [userData]);
 
