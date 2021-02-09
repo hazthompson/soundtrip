@@ -11,7 +11,9 @@ import {
   deleteTempPlaylist,
   createTempPlaylist,
   replacePlaylistTracks,
-  setPlaylistTrackList,
+  setPlaylistTrackListByKeyword,
+  getArtistId,
+  getArtistsTopSongs,
 } from 'utils/spotifyHelpers';
 
 import GlobalStyles from 'assets/GlobalStyles';
@@ -70,10 +72,17 @@ function Navbar() {
     }
   }, [error]);
 
+  useEffect(() => {
+    getArtistId('Madonna').then((id) => {
+      console.log('id', id);
+      getArtistsTopSongs(id);
+    });
+  }, []);
+
   async function createPlaylistWithInitialTracks(userDataID) {
     await createTempPlaylist(userDataID);
     const playlistID = Cookies.get('tempPlaylistID');
-    const tracklist = await setPlaylistTrackList(['Abba', 'Madonna']);
+    const tracklist = await setPlaylistTrackListByKeyword(['Abba', 'Madonna']);
     replacePlaylistTracks(playlistID, tracklist);
   }
 

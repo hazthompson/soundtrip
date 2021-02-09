@@ -70,7 +70,7 @@ export const replacePlaylistTracks = (playlist_id, tracks) => {
 };
 
 //get list of tracks from spotify based on keyword search e.g. madonna my bring back song name Madonna not artist
-export const setPlaylistTrackList = async (currentArtists) => {
+export const setPlaylistTrackListByKeyword = async (currentArtists) => {
   const authToken = Cookies.get('spotifyAuthToken');
 
   const trackUris = await Promise.all(
@@ -115,5 +115,29 @@ export const getArtistId = async (artistName) => {
     }
   );
   const data = await response.json();
-  console.log('artist!!!', data.artists.items[0].id);
+
+  return data.artists.items[0].id;
+};
+
+export const getArtistsTopSongs = async (artistId) => {
+  const authToken = Cookies.get('spotifyAuthToken');
+  const response = await fetch(
+    `${spotifyApi}artists/${artistId}/top-tracks?market=CA`,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    }
+  );
+  const data = await response.json();
+  const firstThree = data.tracks.slice(0, 3);
+  let trackList = [];
+  firstThree.forEach((item) => {
+    trackList.push(item.uri);
+  });
+
+  return trackList.join(',');
 };
