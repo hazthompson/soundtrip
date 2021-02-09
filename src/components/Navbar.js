@@ -11,6 +11,7 @@ import {
   deleteTempPlaylist,
   createTempPlaylist,
   replacePlaylistTracks,
+  setPlaylistTrackList,
 } from 'utils/spotifyHelpers';
 
 import GlobalStyles from 'assets/GlobalStyles';
@@ -69,15 +70,16 @@ function Navbar() {
     }
   }, [error]);
 
+  async function createPlaylistWithInitialTracks(userDataID) {
+    await createTempPlaylist(userDataID);
+    const playlistID = Cookies.get('tempPlaylistID');
+    const tracklist = await setPlaylistTrackList(['Abba', 'Madonna']);
+    replacePlaylistTracks(playlistID, tracklist);
+  }
+
   useEffect(() => {
-    if (!Cookies.get('tempPlaylistID')) {
-      async function createPlaylistWithInitialTracks() {
-        if (userData) {
-          await createTempPlaylist(userData.id);
-          replacePlaylistTracks(Cookies.get('tempPlaylistID'));
-        }
-      }
-      createPlaylistWithInitialTracks();
+    if (!Cookies.get('tempPlaylistID') && userData?.id) {
+      createPlaylistWithInitialTracks(userData.id);
     }
   }, [userData]);
 

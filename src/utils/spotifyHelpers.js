@@ -49,10 +49,10 @@ export const deleteTempPlaylist = (playlist_id) => {
 //range length will be dynamic as will tracklist
 export const replacePlaylistTracks = (playlist_id, tracks) => {
   const authToken = Cookies.get('spotifyAuthToken');
-  const tracksTest =
-    'spotify:track:1uP8UVMXcTJn28TbhfR2Wo,spotify:track:6BKVev5kACyEaolcJkaUbz,spotify:track:5kznDEv5T6VtN8FdIB1R5C,spotify:track:3qKgOxaVi0dUVV1vtrbH1K,spotify:track:3zIiZrCROmhS9ERPdEHXYa';
+  // const tracksTest =
+  //   'spotify:track:1uP8UVMXcTJn28TbhfR2Wo,spotify:track:6BKVev5kACyEaolcJkaUbz,spotify:track:5kznDEv5T6VtN8FdIB1R5C,spotify:track:3qKgOxaVi0dUVV1vtrbH1K,spotify:track:3zIiZrCROmhS9ERPdEHXYa';
   return fetch(
-    `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?uris=${tracksTest}`,
+    `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?uris=${tracks}`,
     {
       method: 'PUT',
       body: JSON.stringify({
@@ -93,17 +93,15 @@ export const setPlaylistTrackList = async (currentArtists) => {
         }
       );
       const data = await response.json();
+      let trackList = [];
+      data.tracks.items.forEach((item) => {
+        trackList.push(item.uri);
+      });
 
-      console.log('Success: playlist tracks replaces', data);
-      // data.tracks.items.forEach((item) => {
-      //   console.log('URI', item.uri);
-      //   // trackList.push(item.uri);
-      // });
-
-      // return data.tracks.items.map((item) => item.uri);
+      const formattedString = trackList.join(',');
+      return formattedString;
     })
   );
 
-  console.log('FINAL TRACK LIST', trackUris);
-  // return trackUris.flat();
+  return trackUris.join(',');
 };
