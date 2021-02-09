@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import Cookies from 'js-cookie';
 
 const playlistStyles = makeStyles({
   playlist__container: {
@@ -10,12 +11,13 @@ const playlistStyles = makeStyles({
 
 function Playlist() {
   const classes = playlistStyles();
-
+  const playlistID = Cookies.get('tempPlaylistID');
+  let playlistSrc = `https://open.spotify.com/embed/playlist/${playlistID}`;
   return (
     <iframe
       className={classes.playlist__container}
-      title='123' //make this playlist id
-      src='https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3'
+      title={playlistID}
+      src={playlistSrc}
       width='300'
       height='380'
       frameBorder='0'
