@@ -1,8 +1,9 @@
 import Cookies from 'js-cookie';
 
+const spotifyApi = 'https://api.spotify.com/v1/';
 export const createTempPlaylist = (spotifyUserID) => {
   const authToken = Cookies.get('spotifyAuthToken');
-  return fetch(`https://api.spotify.com/v1/users/${spotifyUserID}/playlists`, {
+  return fetch(`${spotifyApi}users/${spotifyUserID}/playlists`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -27,17 +28,14 @@ export const createTempPlaylist = (spotifyUserID) => {
 
 export const deleteTempPlaylist = (playlist_id) => {
   const authToken = Cookies.get('spotifyAuthToken');
-  return fetch(
-    `https://api.spotify.com/v1/playlists/${playlist_id}/followers`,
-    {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
-      },
-    }
-  )
+  return fetch(`${spotifyApi}playlists/${playlist_id}/followers`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`,
+    },
+  })
     .then(() => {
       console.log('Success: playlist deleted');
     })
@@ -49,24 +47,20 @@ export const deleteTempPlaylist = (playlist_id) => {
 //range length will be dynamic as will tracklist
 export const replacePlaylistTracks = (playlist_id, tracks) => {
   const authToken = Cookies.get('spotifyAuthToken');
-  // const tracksTest =
-  //   'spotify:track:1uP8UVMXcTJn28TbhfR2Wo,spotify:track:6BKVev5kACyEaolcJkaUbz,spotify:track:5kznDEv5T6VtN8FdIB1R5C,spotify:track:3qKgOxaVi0dUVV1vtrbH1K,spotify:track:3zIiZrCROmhS9ERPdEHXYa';
-  return fetch(
-    `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?uris=${tracks}`,
-    {
-      method: 'PUT',
-      body: JSON.stringify({
-        range_start: 1,
-        insert_before: 1,
-        range_length: 5,
-      }),
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
-      },
-    }
-  )
+
+  return fetch(`${spotifyApi}playlists/${playlist_id}/tracks?uris=${tracks}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      range_start: 1,
+      insert_before: 1,
+      range_length: 5,
+    }),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`,
+    },
+  })
     .then(() => {
       console.log('Success: playlist tracks replaces');
     })
@@ -75,14 +69,14 @@ export const replacePlaylistTracks = (playlist_id, tracks) => {
     });
 };
 
-//get list of tracks from spotify
+//get list of tracks from spotify based on keyword search e.g. madonna my bring back song name Madonna not artist
 export const setPlaylistTrackList = async (currentArtists) => {
   const authToken = Cookies.get('spotifyAuthToken');
 
   const trackUris = await Promise.all(
     currentArtists.map(async (artist) => {
       const response = await fetch(
-        `https://api.spotify.com/v1/search?q=${artist}&type=track&market=CA&limit=2`,
+        `${spotifyApi}search?q=${artist}&type=track&market=CA&limit=2`,
         {
           method: 'GET',
           headers: {
@@ -104,4 +98,22 @@ export const setPlaylistTrackList = async (currentArtists) => {
   );
 
   return trackUris.join(',');
+};
+
+export const getArtistId = async (artistName) => {
+  const authToken = Cookies.get('spotifyAuthToken');
+
+  const response = await fetch(
+    `${spotifyApi}search?q=${artistName}&type=artist&limit=1`,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    }
+  );
+  const data = await response.json();
+  console.log('artist!!!', data.artists.items[0].id);
 };
