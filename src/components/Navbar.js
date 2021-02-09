@@ -72,10 +72,26 @@ function Navbar() {
     }
   }, [error]);
 
+  const fetchTopSongs = async (artistsNames) => {
+    const topSongs = await Promise.all(
+      artistsNames.map(async (artist) => {
+        const id = await getArtistId(artist);
+        return await getArtistsTopSongs(id);
+      })
+    );
+    return topSongs.flat();
+  };
+
   useEffect(() => {
-    getArtistId('Madonna').then((id) => {
-      console.log('id', id);
-      getArtistsTopSongs(id);
+    const artistsNames = ['Madonna', 'Abba'];
+    const playlistID = Cookies.get('tempPlaylistID');
+    let tracklist = [];
+    fetchTopSongs(artistsNames).then((response) => {
+      tracklist = response.join(',');
+      console.log('tracks2322', tracklist);
+
+      replacePlaylistTracks(playlistID, tracklist);
+      //Now sen
     });
   }, []);
 
