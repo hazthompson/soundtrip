@@ -5,6 +5,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+import { EventProvider } from 'utils/EventContext';
 import { SpotifyApiContext } from 'react-spotify-api';
 import Cookies from 'js-cookie';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,7 +17,6 @@ import AuthPage from 'components/AuthPage';
 const useStyles = makeStyles({
   App: {
     fontFamily: `${GlobalStyles.bodyFont}`,
-    // backgroundColor: `${GlobalStyles.backgroundColor}`,
     minHeight: '100vh',
   },
 });
@@ -33,15 +33,17 @@ function App() {
     <Router>
       <div className={classes.App}>
         {token ? (
-          <SpotifyApiContext.Provider value={token}>
-            <Navbar />
-            <Switch>
-              <Route path='/' exact>
-                <Homepage />
-              </Route>
-              <Redirect to='/' />
-            </Switch>
-          </SpotifyApiContext.Provider>
+          <EventProvider>
+            <SpotifyApiContext.Provider value={token}>
+              <Navbar />
+              <Switch>
+                <Route path='/' exact>
+                  <Homepage />
+                </Route>
+                <Redirect to='/' />
+              </Switch>
+            </SpotifyApiContext.Provider>
+          </EventProvider>
         ) : (
           // Display the spotify login page
           <Switch>
