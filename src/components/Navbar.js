@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   Navbar__toolbar: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
+    gridTemplateColumns: 'repeat(2, 1fr)',
     backgroundColor: `${GlobalStyles.backgroundColor}`,
   },
 
@@ -51,6 +51,10 @@ const useStyles = makeStyles((theme) => ({
 
     color: `${GlobalStyles.titleColor}`,
     display: 'inline',
+  },
+  Navbar__logoutButton: {
+    width: '25%',
+    justifySelf: 'right',
   },
 }));
 
@@ -108,11 +112,11 @@ function Navbar() {
         <Typography variant='h6' className={classes.Navbar__title}>
           {`Soundtrip - ${userData?.display_name}`}
         </Typography>
-        <div className={classes.Navbar__locationContainer}>
-          <LocationOnIcon />
-          <span className={classes.Navbar__location}>Vancouver, BC</span>
-        </div>
-        <Button onClick={handleLogout} variant='contained'>
+        <Button
+          onClick={handleLogout}
+          variant='contained'
+          className={classes.Navbar__logoutButton}
+        >
           Logout
         </Button>
       </Toolbar>
