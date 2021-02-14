@@ -16,7 +16,7 @@ import {
 
 import GlobalStyles from 'assets/GlobalStyles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   Navbar__container: {
     gridColumn: '1 /span 12',
     backgroundColor: `${GlobalStyles.backgroundColor}`,

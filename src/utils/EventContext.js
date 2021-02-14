@@ -1,14 +1,16 @@
 import { createContext, useState } from 'react';
 
 const defaultEvents = {
-  artists: [],
+  artistsNames: [],
+  tester: 'poo',
 };
 const EventContext = createContext();
 
 const EventProvider = ({ children }) => {
-  const [events, setEvents] = useState(defaultEvents);
+  const [globalState, setGlobalState] = useState(defaultEvents);
+
   return (
-    <EventContext.Provider value={{ events, setEvents }}>
+    <EventContext.Provider value={{ globalState, setGlobalState }}>
       {children}
     </EventContext.Provider>
   );

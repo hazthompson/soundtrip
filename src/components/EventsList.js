@@ -1,8 +1,10 @@
+import { useContext, useEffect } from 'react';
 import moment from 'moment';
 import { EVENTS_QUERY } from 'utils/queries';
 import { useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
 import GlobalStyles from 'assets/GlobalStyles';
+import EventContext from 'utils/EventContext';
 
 const eventListStyles = makeStyles({
   eventLists__loading: {
@@ -38,6 +40,7 @@ const eventListStyles = makeStyles({
 
 function EventsList({ startDate, latLng }) {
   const classes = eventListStyles();
+  const { globalState, setGlobalState } = useContext(EventContext);
   const { data: eventsData, loading: loadingEvents } = useQuery(EVENTS_QUERY, {
     variables: {
       startDate,
@@ -46,11 +49,29 @@ function EventsList({ startDate, latLng }) {
     },
   });
 
+  useEffect(() => {
+    console.log(eventsData);
+
+    if (eventsData) {
+      const newArtistsArray = eventsData.events.map(
+        (event) => event.artistName
+      );
+
+      setGlobalState((currentState) => ({
+        ...currentState,
+        artistsNames: newArtistsArray,
+      }));
+    }
+  }, [eventsData, setGlobalState]);
+
+  console.log('after setting?', globalState);
+
   if (loadingEvents) {
     return <p className={classes.eventLists__loading}>'loading'</p>;
   } else {
     return (
       <div className={classes.eventLists__container}>
+        <div>{globalState.artists}</div>
         {eventsData.events.map((event, index) => (
           <div className={classes.eventLists__eventContainer} key={index}>
             <img
