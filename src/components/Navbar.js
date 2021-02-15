@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useUser } from 'react-spotify-api';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -6,13 +6,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Cookies from 'js-cookie';
-import {
-  deleteTempPlaylist,
-  createTempPlaylist,
-  replacePlaylistTracks,
-  getArtistId,
-  getArtistsTopSongs,
-} from 'utils/spotifyHelpers';
+import EventContext from 'utils/EventContext';
+import { deleteTempPlaylist } from 'utils/spotifyHelpers';
 
 import GlobalStyles from 'assets/GlobalStyles';
 
@@ -57,16 +52,21 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-async function handleLogout() {
-  await deleteTempPlaylist(Cookies.get('tempPlaylistID'));
+const handleLogout = (tempPlaylistId) => async () => {
+  if (tempPlaylistId) {
+    await deleteTempPlaylist(tempPlaylistId);
+  }
   Cookies.remove('spotifyAuthToken');
-  Cookies.remove('tempPlaylistID');
+  Cookies.remove('tempPlaylistId');
   window.location.href = '/auth';
-}
+};
 
 function Navbar() {
   const classes = useStyles();
   const { data: userData, error, loading } = useUser();
+  const { globalState, setGlobalState } = useContext(EventContext);
+
+  const { tempPlaylistId } = globalState;
 
   useEffect(() => {
     if (error?.status === 401) {
@@ -74,32 +74,13 @@ function Navbar() {
     }
   }, [error]);
 
-  const fetchTopSongs = async (artistsNames) => {
-    const topSongs = await Promise.all(
-      artistsNames.map(async (artist) => {
-        const id = await getArtistId(artist);
-        return await getArtistsTopSongs(id);
-      })
-    );
-    return topSongs.flat();
-  };
-
-  //create initial playlist with initial tracks
+  //set user data in global state
   useEffect(() => {
-    if (!Cookies.get('tempPlaylistID') && userData?.id) {
-      const artistsNames = ['Madonna', 'Abba'];
-      let tracklist = [];
-      createTempPlaylist(userData.id).then(() => {
-        const playlistID = Cookies.get('tempPlaylistID');
-        fetchTopSongs(artistsNames).then((response) => {
-          tracklist = response.join(',');
-          console.log('tracks2322', tracklist);
-
-          replacePlaylistTracks(playlistID, tracklist);
-        });
-      });
-    }
-  }, [userData]);
+    setGlobalState((currentState) => ({
+      ...currentState,
+      currentUser: userData,
+    }));
+  }, [userData, setGlobalState]);
 
   if (loading) {
     return <p>Loading</p>;
@@ -112,7 +93,7 @@ function Navbar() {
           {`Soundtrip - ${userData?.display_name}`}
         </Typography>
         <Button
-          onClick={handleLogout}
+          onClick={handleLogout(tempPlaylistId)}
           variant='contained'
           className={classes.Navbar__logoutButton}
         >

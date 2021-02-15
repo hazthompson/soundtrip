@@ -50,21 +50,15 @@ function EventsList({ startDate, latLng }) {
   });
 
   useEffect(() => {
-    console.log(eventsData);
-
     if (eventsData) {
-      const newArtistsArray = eventsData.events.map(
-        (event) => event.artistName
-      );
+      const newArtistArray = eventsData.events.map((event) => event.artistName);
 
       setGlobalState((currentState) => ({
         ...currentState,
-        artistsNames: newArtistsArray,
+        artistNames: newArtistArray,
       }));
     }
   }, [eventsData, setGlobalState]);
-
-  console.log('after setting?', globalState);
 
   if (loadingEvents) {
     return <p className={classes.eventLists__loading}>'loading'</p>;
