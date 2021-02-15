@@ -8,14 +8,17 @@ const playlistStyles = makeStyles({
   },
 });
 
-function Playlist() {
+function Playlist({ loadingPLaylist, playlistId }) {
   const classes = playlistStyles();
+  let playlistSrc = `https://open.spotify.com/embed/playlist/${playlistId}`;
 
-  return (
+  return loadingPLaylist ? (
+    <p>Loading</p>
+  ) : (
     <iframe
       className={classes.playlist__container}
-      title='123' //make this playlist id
-      src='https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3'
+      title={playlistId}
+      src={playlistSrc}
       width='300'
       height='380'
       frameBorder='0'

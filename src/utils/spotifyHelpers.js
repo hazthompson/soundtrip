@@ -18,9 +18,7 @@ export const createTempPlaylist = (spotifyUserID) => {
     }),
   })
     .then((response) => response.json())
-    .then((data) => {
-      Cookies.set('tempPlaylistID', data.id);
-    })
+    .then((data) => data.id)
     .catch((error) => {
       console.error('Error:', error);
     });
@@ -69,6 +67,56 @@ export const replacePlaylistTracks = (playlist_id, tracks) => {
     });
 };
 
+export const getArtistId = async (artistName) => {
+  const authToken = Cookies.get('spotifyAuthToken');
+
+  const response = await fetch(
+    `${spotifyApi}search?q=${artistName}&type=artist&limit=1`,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    }
+  );
+  const data = await response.json();
+  if (data.artists.items[0]) {
+    return data.artists.items[0].id;
+  } else {
+    return;
+  }
+};
+
+export const getArtistsTopSongs = async (artistId) => {
+  const authToken = Cookies.get('spotifyAuthToken');
+  const response = await fetch(
+    `${spotifyApi}artists/${artistId}/top-tracks?market=CA`,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    }
+  );
+  const data = await response.json();
+  if (data.tracks) {
+    const firstThree = data.tracks.slice(0, 3);
+    let trackList = [];
+    firstThree.forEach((item) => {
+      trackList.push(item.uri);
+    });
+
+    return trackList.join(',');
+  } else {
+    return;
+  }
+};
+
+//NOT USING THIS CURRENTLY
 //get list of tracks from spotify based on keyword search e.g. madonna my bring back song name Madonna not artist
 export const setPlaylistTrackListByKeyword = async (currentArtists) => {
   const authToken = Cookies.get('spotifyAuthToken');
@@ -98,46 +146,4 @@ export const setPlaylistTrackListByKeyword = async (currentArtists) => {
   );
 
   return trackUris.join(',');
-};
-
-export const getArtistId = async (artistName) => {
-  const authToken = Cookies.get('spotifyAuthToken');
-
-  const response = await fetch(
-    `${spotifyApi}search?q=${artistName}&type=artist&limit=1`,
-    {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
-      },
-    }
-  );
-  const data = await response.json();
-
-  return data.artists.items[0].id;
-};
-
-export const getArtistsTopSongs = async (artistId) => {
-  const authToken = Cookies.get('spotifyAuthToken');
-  const response = await fetch(
-    `${spotifyApi}artists/${artistId}/top-tracks?market=CA`,
-    {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
-      },
-    }
-  );
-  const data = await response.json();
-  const firstThree = data.tracks.slice(0, 3);
-  let trackList = [];
-  firstThree.forEach((item) => {
-    trackList.push(item.uri);
-  });
-
-  return trackList.join(',');
 };
