@@ -3,8 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 const playlistStyles = makeStyles({
   playlist__container: {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    gridColumn: '9 /span 3',
-    height: '90vh',
+    gridColumn: '8 /span 4',
+    width: '100%',
+    height: '380px',
+    borderRadius: '4%',
   },
 });
 
@@ -19,8 +21,6 @@ function Playlist({ loadingPLaylist, playlistId }) {
       className={classes.playlist__container}
       title={playlistId}
       src={playlistSrc}
-      width='300'
-      height='380'
       frameBorder='0'
       allowtransparency='true'
       allow='encrypted-media'

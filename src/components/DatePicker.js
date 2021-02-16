@@ -9,10 +9,6 @@ import {
 const useStyles = makeStyles((theme) => ({
   datePicker: {
     justifySelf: 'Center',
-
-    // MuiInputBaseRoot: {
-    //   color: 'white',
-    // },
   },
 }));
 

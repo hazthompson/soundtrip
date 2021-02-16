@@ -13,7 +13,8 @@ const eventListStyles = makeStyles({
   eventLists__container: {
     height: '90vh',
     overflowY: 'scroll',
-    gridColumn: '2 /span 3',
+    gridColumn: '2 /span 4',
+    gridRow: 2,
   },
   eventLists__eventContainer: {
     padding: '1%',

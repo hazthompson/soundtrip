@@ -13,6 +13,7 @@ import {
   getArtistId,
   getArtistsTopSongs,
 } from 'utils/spotifyHelpers';
+import GlobalStyles from 'assets/GlobalStyles';
 
 const eventListStyles = makeStyles({
   homepage: {
@@ -22,9 +23,13 @@ const eventListStyles = makeStyles({
   },
   homepage__locationDateContainer: {
     display: 'grid',
-    gridColumn: '6 /span 2',
+    gridTemplateColumns: '1fr 1fr',
+    gridColumn: '4 /span 6',
+    gridRow: 1,
     justifyContent: 'center',
-    maxHeight: '50%',
+    backgroundColor: `${GlobalStyles.pinkWhite}`,
+    borderRadius: '32px',
+    marginBottom: '50px',
   },
 });
 

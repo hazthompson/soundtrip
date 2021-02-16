@@ -19,7 +19,49 @@ const theme = createMuiTheme({
   overrides: {
     MuiMenu: {
       paper: {
-        backgroundColor: `${GlobalStyles.offWhite}`,
+        backgroundColor: `${GlobalStyles.pinkWhite}`,
+        color: `${GlobalStyles.midblue}`,
+        fontFamily: `${GlobalStyles.bodyFont}`,
+      },
+    },
+    MuiMenuItem: {
+      root: {
+        fontFamily: `${GlobalStyles.bodyFont}`,
+      },
+    },
+    MuiPaper: {
+      root: {
+        backgroundColor: `${GlobalStyles.pinkWhite}`,
+        // color: `${GlobalStyles.midblue}`,
+        fontFamily: `${GlobalStyles.bodyFont}`,
+      },
+    },
+    MuiFormLabel: {
+      root: {
+        color: `${GlobalStyles.darkBlue}`,
+        fontWeight: 800,
+        fontFamily: `${GlobalStyles.headerFont}`,
+      },
+    },
+    MuiInputBase: {
+      input: {
+        fontFamily: `${GlobalStyles.bodyFont}`,
+        color: `${GlobalStyles.darkBlue}`,
+      },
+    },
+    MuiInput: {
+      underline: {
+        '&&&:before': {
+          borderBottom: 'none',
+        },
+        '&&:after': {
+          borderBottom: 'none',
+        },
+      },
+    },
+    MuiSvgIcon: {
+      root: {
+        color: `${GlobalStyles.darkBlue}`,
       },
     },
   },
@@ -29,7 +71,7 @@ const useStyles = makeStyles({
   App: {
     fontFamily: `${GlobalStyles.bodyFont}`,
     minHeight: '100vh',
-    backgroundColor: `${GlobalStyles.offWhite}`,
+    backgroundColor: `${GlobalStyles.darkBlue}`,
   },
 });
 

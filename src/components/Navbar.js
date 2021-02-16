@@ -19,17 +19,18 @@ const useStyles = makeStyles(() => ({
     gridColumn: '1 /span 12',
     backgroundColor: `${GlobalStyles.backgroundColor}`,
     marginBottom: '10px',
+    boxShadow: 'none',
   },
   Navbar__toolbar: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
-    backgroundColor: `${GlobalStyles.accentOrange}`,
+    backgroundColor: `${GlobalStyles.darkBlue}`,
   },
 
   Navbar__logo: {
     fontFamily: `${GlobalStyles.logo}`,
     fontSize: '30px',
-    color: `${GlobalStyles.grayBlue}`,
+    color: `${GlobalStyles.pinkWhite}`,
   },
 
   Navbar__locationContainer: {
@@ -45,7 +46,6 @@ const useStyles = makeStyles(() => ({
   },
   Navbar__location: {
     fontFamily: `${GlobalStyles.headerFont}`,
-
     color: `${GlobalStyles.titleColor}`,
     display: 'inline',
   },
@@ -53,10 +53,7 @@ const useStyles = makeStyles(() => ({
     justifySelf: 'right',
     color: `${GlobalStyles.offWhite}`,
     border: `${GlobalStyles.accentOrange}`,
-  },
-
-  Navbar__paperStyling: {
-    backgroundColor: `${GlobalStyles.offWhite}`,
+    fontFamily: `${GlobalStyles.bodyFont}`,
   },
 }));
 
@@ -115,7 +112,7 @@ function Navbar() {
             className={classes.Navbar__optionsDropDown}
           >
             <span>{userData?.display_name.toUpperCase()}</span>
-            <ArrowDropDownIcon />
+            <ArrowDropDownIcon style={{ fill: `${GlobalStyles.pinkWhite}` }} />
           </Button>
           <Menu
             id='simple-menu'
@@ -123,7 +120,6 @@ function Navbar() {
             keepMounted
             open={Boolean(anchorEl)}
             onClose={handleMenuClose}
-            // classes={{ paper: classes.Navbar__paperStyling }}
           >
             <MenuItem onClick={handleMenuClose}>Saved playlists</MenuItem>
             <MenuItem onClick={handleLogout(tempPlaylistId)}>Logout</MenuItem>

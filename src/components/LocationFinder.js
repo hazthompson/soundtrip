@@ -8,12 +8,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
 import { geocodeByAddress } from 'react-places-autocomplete';
+// import GlobalStyles from 'assets/GlobalStyles';
 
 const autocompleteService = { current: null };
 
 const useStyles = makeStyles((theme) => ({
   locationFinder: {
-    justifySelf: 'Center',
+    marginTop: '16px',
+    marginBottom: '8px',
+    justifySelf: 'center',
+    width: '250px',
   },
   locationFinder__icon: {
     color: theme.palette.text.secondary,
@@ -95,7 +99,6 @@ export default function LocationFinder({ setLatLng }) {
     <Autocomplete
       className={classes.locationFinder}
       id='google-map-location-search'
-      style={{ width: 300 }}
       getOptionLabel={(option) =>
         typeof option === 'string' ? option : option.description
       }
@@ -112,9 +115,12 @@ export default function LocationFinder({ setLatLng }) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label='Add a location'
-          variant='outlined'
+          label='Choose your location'
+          variant='standard'
           fullWidth
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
       )}
       renderOption={(option) => {
