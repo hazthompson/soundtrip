@@ -13,7 +13,7 @@ function AuthPage() {
   const SPOTIFY_AUTHORIZE_URL = `https://accounts.spotify.com/en/authorize?response_type=token&client_id=${
     process.env.REACT_APP_SPOTIFY_CLIENT_ID
   }&show_dialog=true&scope=${SCOPES}&redirect_uri=${encodeURIComponent(
-    process.env.REACT_APP_SPOTIFY_REDIRECT_URI_LIVE
+    process.env.REACT_APP_SPOTIFY_REDIRECT_URI_LOCAL
   )}`;
 
   useEffect(() => {
