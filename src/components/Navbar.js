@@ -1,10 +1,13 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { useUser } from 'react-spotify-api';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Cookies from 'js-cookie';
 import EventContext from 'utils/EventContext';
 import { deleteTempPlaylist } from 'utils/spotifyHelpers';
@@ -20,13 +23,13 @@ const useStyles = makeStyles(() => ({
   Navbar__toolbar: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
-    backgroundColor: `${GlobalStyles.backgroundColor}`,
+    backgroundColor: `${GlobalStyles.accentOrange}`,
   },
 
-  Navbar__title: {
+  Navbar__logo: {
     fontFamily: `${GlobalStyles.headerFont}`,
     fontSize: '30px',
-    color: `${GlobalStyles.titleColor}`,
+    color: `${GlobalStyles.grayBlue}`,
   },
 
   Navbar__locationContainer: {
@@ -46,9 +49,14 @@ const useStyles = makeStyles(() => ({
     color: `${GlobalStyles.titleColor}`,
     display: 'inline',
   },
-  Navbar__logoutButton: {
-    width: '25%',
+  Navbar__optionsDropDown: {
     justifySelf: 'right',
+    color: `${GlobalStyles.offWhite}`,
+    border: `${GlobalStyles.accentOrange}`,
+  },
+
+  Navbar__paperStyling: {
+    backgroundColor: `${GlobalStyles.offWhite}`,
   },
 }));
 
@@ -65,7 +73,7 @@ function Navbar() {
   const classes = useStyles();
   const { data: userData, error, loading } = useUser();
   const { globalState, setGlobalState } = useContext(EventContext);
-
+  const [anchorEl, setAnchorEl] = useState(null);
   const { tempPlaylistId } = globalState;
 
   useEffect(() => {
@@ -82,25 +90,47 @@ function Navbar() {
     }));
   }, [userData, setGlobalState]);
 
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
   if (loading) {
     return <p>Loading</p>;
+  } else {
+    return (
+      <AppBar position='static' className={classes.Navbar__container}>
+        <Toolbar className={classes.Navbar__toolbar}>
+          <Typography variant='h6' className={classes.Navbar__logo}>
+            Soundtrip
+          </Typography>
+          <Button
+            variant='outlined'
+            aria-controls='simple-menu'
+            aria-haspopup='true'
+            onClick={handleMenuClick}
+            className={classes.Navbar__optionsDropDown}
+          >
+            <span>{userData?.display_name.toUpperCase()}</span>
+            <ArrowDropDownIcon />
+          </Button>
+          <Menu
+            id='simple-menu'
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+            // classes={{ paper: classes.Navbar__paperStyling }}
+          >
+            <MenuItem onClick={handleMenuClose}>Saved playlists</MenuItem>
+            <MenuItem onClick={handleLogout(tempPlaylistId)}>Logout</MenuItem>
+          </Menu>
+        </Toolbar>
+      </AppBar>
+    );
   }
-
-  return (
-    <AppBar position='static' className={classes.Navbar__container}>
-      <Toolbar className={classes.Navbar__toolbar}>
-        <Typography variant='h6' className={classes.Navbar__title}>
-          {`Soundtrip - ${userData?.display_name}`}
-        </Typography>
-        <Button
-          onClick={handleLogout(tempPlaylistId)}
-          variant='contained'
-          className={classes.Navbar__logoutButton}
-        >
-          Logout
-        </Button>
-      </Toolbar>
-    </AppBar>
-  );
 }
 export default Navbar;

@@ -8,16 +8,28 @@ import {
 import { EventProvider } from 'utils/EventContext';
 import { SpotifyApiContext } from 'react-spotify-api';
 import Cookies from 'js-cookie';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import GlobalStyles from 'assets/GlobalStyles';
 import Homepage from 'pages/Homepage';
 import Navbar from 'components/Navbar';
 import AuthPage from 'components/AuthPage';
 
+const theme = createMuiTheme({
+  overrides: {
+    MuiMenu: {
+      paper: {
+        backgroundColor: `${GlobalStyles.offWhite}`,
+      },
+    },
+  },
+});
+
 const useStyles = makeStyles({
   App: {
     fontFamily: `${GlobalStyles.bodyFont}`,
     minHeight: '100vh',
+    backgroundColor: `${GlobalStyles.offWhite}`,
   },
 });
 
@@ -35,13 +47,15 @@ function App() {
         {token ? (
           <EventProvider>
             <SpotifyApiContext.Provider value={token}>
-              <Navbar />
-              <Switch>
-                <Route path='/' exact>
-                  <Homepage />
-                </Route>
-                <Redirect to='/' />
-              </Switch>
+              <ThemeProvider theme={theme}>
+                <Navbar />
+                <Switch>
+                  <Route path='/' exact>
+                    <Homepage />
+                  </Route>
+                  <Redirect to='/' />
+                </Switch>
+              </ThemeProvider>
             </SpotifyApiContext.Provider>
           </EventProvider>
         ) : (
