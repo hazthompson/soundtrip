@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
   },
 
   Navbar__logo: {
-    fontFamily: `${GlobalStyles.headerFont}`,
+    fontFamily: `${GlobalStyles.logo}`,
     fontSize: '30px',
     color: `${GlobalStyles.grayBlue}`,
   },

@@ -6,6 +6,7 @@ const GlobalStyles = {
   //font:
   headerFont: 'Poppins, sans-serif',
   bodyFont: 'Raleway, sans-serif',
+  logo: 'Anton, sans-serif',
 
   //color palette option1:
   accentOrange: '#ff9a76',
