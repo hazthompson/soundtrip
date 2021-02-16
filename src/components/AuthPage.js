@@ -3,16 +3,20 @@ import Cookies from 'js-cookie';
 import { useLocation } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
-const SCOPES =
-  'user-read-private,user-read-email, playlist-modify-public,playlist-modify-private'; //scopes needed for our API requests
-const SPOTIFY_AUTHORIZE_URL = `https://accounts.spotify.com/en/authorize?response_type=token&client_id=${
-  process.env.REACT_APP_SPOTIFY_CLIENT_ID
-}&show_dialog=true&scope=${SCOPES}&redirect_uri=${encodeURIComponent(
-  process.env.REACT_APP_SPOTIFY_REDIRECT_URI_LOCAL
-)}`;
-
 function AuthPage() {
   const location = useLocation();
+  let currentLocation = window.location.href;
+  console.log('location', currentLocation);
+
+  const SCOPES =
+    'user-read-private,user-read-email, playlist-modify-public,playlist-modify-private'; //scopes needed for our API requests
+  const SPOTIFY_AUTHORIZE_URL = `https://accounts.spotify.com/en/authorize?response_type=token&client_id=${
+    process.env.REACT_APP_SPOTIFY_CLIENT_ID
+  }&show_dialog=true&scope=${SCOPES}&redirect_uri=${
+    currentLocation.includes('soundtrip')
+      ? encodeURIComponent(process.env.REACT_APP_SPOTIFY_REDIRECT_URI_LIVE)
+      : encodeURIComponent(process.env.REACT_APP_SPOTIFY_REDIRECT_URI_LOCAL)
+  }`;
 
   useEffect(() => {
     if (location.pathname === '/callback/') {
