@@ -3,7 +3,6 @@ import moment from 'moment';
 import { EVENTS_QUERY } from 'utils/queries';
 import { useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import GlobalStyles from 'assets/GlobalStyles';
 import EventContext from 'utils/EventContext';
@@ -21,17 +20,21 @@ const eventListStyles = makeStyles({
   eventLists__eventContainer: {
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 1fr)',
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    background: `${GlobalStyles.darkTeal}`,
     color: 'white',
     marginBottom: '10px',
     borderRadius: '15px',
+    height: '120px',
   },
   eventList__ticketLink: {
     color: 'white',
     fontFamily: `${GlobalStyles.headerFont}`,
+    textDecoration: 'none',
+    width: '50%',
+    alignSelf: 'center',
     '&:hover': {
       cursor: 'pointer',
-      color: 'pink',
+      color: '#ee6f57',
     },
   },
   eventList__image: {
@@ -39,11 +42,20 @@ const eventListStyles = makeStyles({
     height: '100%',
   },
   eventList_infoContainer: {
+    display: 'grid',
+    textDecoration: 'none',
     gridColumn: '2 /span2',
     paddingLeft: '10px',
+    paddingTop: '10px',
   },
   eventList_artistName: {
     fontWeight: 600,
+  },
+  eventList_eventInfo: {
+    fontSize: '14px',
+    fontWeight: 400,
+    display: 'grid',
+    alignContent: 'space-between',
   },
 });
 
@@ -82,20 +94,22 @@ function EventsList({ startDate, latLng }) {
               src={event.imageUrl}
             />
             <div className={classes.eventList_infoContainer}>
-              <div className={classes.eventList_artistName}>
-                {event.artistName}
+              <div>
+                <div className={classes.eventList_artistName}>
+                  {event.artistName}
+                </div>
+                <span className={classes.eventList_eventInfo}>
+                  {moment(event.date).format('Do MMM')} | {event.venue}
+                </span>
               </div>
-              <p>{moment(event.date).format('MMM Do YYYY')}</p>
-              <div>Venue: {event.venue}</div>
-
-              <Button
+              <a
                 href={event.url}
                 target='_blank'
                 rel='noreferrer'
                 className={classes.eventList__ticketLink}
               >
                 Buy tickets
-              </Button>
+              </a>
             </div>
           </Card>
         ))}
