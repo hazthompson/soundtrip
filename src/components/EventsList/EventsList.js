@@ -6,11 +6,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import GlobalStyles from 'assets/GlobalStyles';
 import EventContext from 'utils/EventContext';
+import EventsListSkeleton from './EventsListSkeleton';
 
-const eventListStyles = makeStyles({
-  eventLists__loading: {
-    color: `${GlobalStyles.titleColor}`,
-  },
+const eventListStyles = makeStyles((theme) => ({
   eventLists__container: {
     height: '90vh',
     overflowY: 'scroll',
@@ -57,10 +55,9 @@ const eventListStyles = makeStyles({
     display: 'grid',
     alignContent: 'space-between',
   },
-});
+}));
 
 function EventsList({ startDate, latLng }) {
-  console.log('start date', startDate);
   const classes = eventListStyles();
   const { setGlobalState } = useContext(EventContext);
   const { data: eventsData, loading: loadingEvents } = useQuery(EVENTS_QUERY, {
@@ -70,6 +67,7 @@ function EventsList({ startDate, latLng }) {
       lng: latLng.lng.toString(),
     },
   });
+  const numberOfSkeletons = 6;
 
   useEffect(() => {
     if (eventsData) {
@@ -82,41 +80,43 @@ function EventsList({ startDate, latLng }) {
     }
   }, [eventsData, setGlobalState]);
 
-  if (loadingEvents) {
-    return <p className={classes.eventLists__loading}>'loading'</p>;
-  } else {
-    return (
-      <div className={classes.eventLists__container}>
-        {eventsData.events.map((event, index) => (
-          <Card className={classes.eventLists__eventContainer} key={index}>
-            <img
-              className={classes.eventList__image}
-              alt={event.artistName}
-              src={event.imageUrl}
-            />
-            <div className={classes.eventList_infoContainer}>
-              <div>
-                <div className={classes.eventList_artistName}>
-                  {event.artistName}
+  return (
+    <div className={classes.eventLists__container}>
+      {loadingEvents
+        ? [...Array(numberOfSkeletons)].map((e) => (
+            <EventsListSkeleton key={e} />
+          ))
+        : eventsData.events.map((event, index) => (
+            <>
+              <Card className={classes.eventLists__eventContainer} key={index}>
+                <img
+                  className={classes.eventList__image}
+                  alt={event.artistName}
+                  src={event.imageUrl}
+                />
+                <div className={classes.eventList_infoContainer}>
+                  <div>
+                    <div className={classes.eventList_artistName}>
+                      {event.artistName}
+                    </div>
+                    <span className={classes.eventList_eventInfo}>
+                      {moment(event.date).format('Do MMM')} | {event.venue}
+                    </span>
+                  </div>
+                  <a
+                    href={event.url}
+                    target='_blank'
+                    rel='noreferrer'
+                    className={classes.eventList__ticketLink}
+                  >
+                    Buy tickets
+                  </a>
                 </div>
-                <span className={classes.eventList_eventInfo}>
-                  {moment(event.date).format('Do MMM')} | {event.venue}
-                </span>
-              </div>
-              <a
-                href={event.url}
-                target='_blank'
-                rel='noreferrer'
-                className={classes.eventList__ticketLink}
-              >
-                Buy tickets
-              </a>
-            </div>
-          </Card>
-        ))}
-      </div>
-    );
-  }
+              </Card>
+            </>
+          ))}
+    </div>
+  );
 }
 
 export default EventsList;
