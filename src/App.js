@@ -15,11 +15,11 @@ import Homepage from 'pages/Homepage';
 import Navbar from 'components/Navbar';
 import AuthPage from 'components/AuthPage';
 
-const theme = createMuiTheme({
+const theme = createMuiTheme((theme) => ({
   overrides: {
     MuiMenu: {
       paper: {
-        backgroundColor: `${GlobalStyles.pinkWhite}`,
+        backgroundColor: theme.palette.grey[200],
         color: `${GlobalStyles.midblue}`,
         fontFamily: `${GlobalStyles.bodyFont}`,
       },
@@ -31,7 +31,7 @@ const theme = createMuiTheme({
     },
     MuiPaper: {
       root: {
-        backgroundColor: `${GlobalStyles.pinkWhite}`,
+        backgroundColor: theme.palette.grey[200],
         fontFamily: `${GlobalStyles.bodyFont}`,
       },
     },
@@ -74,7 +74,7 @@ const theme = createMuiTheme({
       },
     },
   },
-});
+}));
 
 const useStyles = makeStyles({
   App: {

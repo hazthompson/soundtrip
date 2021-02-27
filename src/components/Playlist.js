@@ -7,7 +7,7 @@ const playlistStyles = makeStyles({
     gridColumn: '8 /span 4',
     width: '100%',
     height: '100%',
-    borderRadius: '15px',
+    borderRadius: '4px',
   },
 });
 
