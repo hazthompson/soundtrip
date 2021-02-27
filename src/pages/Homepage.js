@@ -13,9 +13,8 @@ import {
   getArtistId,
   getArtistsTopSongs,
 } from 'utils/spotifyHelpers';
-import GlobalStyles from 'assets/GlobalStyles';
 
-const eventListStyles = makeStyles({
+const eventListStyles = makeStyles((theme) => ({
   homepage: {
     display: 'grid',
     gridTemplateColumns: 'repeat(12, 1fr)',
@@ -27,11 +26,11 @@ const eventListStyles = makeStyles({
     gridColumn: '4 /span 6',
     gridRow: 1,
     justifyContent: 'center',
-    backgroundColor: `${GlobalStyles.pinkWhite}`,
-    borderRadius: '32px',
+    backgroundColor: theme.palette.grey[200],
+    borderRadius: '40px',
     marginBottom: '50px',
   },
-});
+}));
 
 const fetchTopSongs = async (artistNames) => {
   const topSongs = await Promise.all(

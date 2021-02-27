@@ -14,7 +14,7 @@ import { deleteTempPlaylist } from 'utils/spotifyHelpers';
 
 import GlobalStyles from 'assets/GlobalStyles';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   Navbar__container: {
     gridColumn: '1 /span 12',
     backgroundColor: `${GlobalStyles.backgroundColor}`,
@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
   Navbar__logo: {
     fontFamily: `${GlobalStyles.logo}`,
     fontSize: '30px',
-    color: `#ff9a76`,
+    color: `${GlobalStyles.accentOrange}`,
   },
 
   Navbar__locationContainer: {
@@ -51,7 +51,7 @@ const useStyles = makeStyles(() => ({
   },
   Navbar__optionsDropDown: {
     justifySelf: 'right',
-    color: `${GlobalStyles.offWhite}`,
+    color: theme.palette.grey[200],
     border: `${GlobalStyles.accentOrange}`,
     fontFamily: `${GlobalStyles.bodyFont}`,
   },
@@ -112,7 +112,7 @@ function Navbar() {
             className={classes.Navbar__optionsDropDown}
           >
             <span>{userData?.display_name.toUpperCase()}</span>
-            <ArrowDropDownIcon style={{ fill: `${GlobalStyles.pinkWhite}` }} />
+            <ArrowDropDownIcon style={{ fill: '#eeeeee' }} />
           </Button>
           <Menu
             id='simple-menu'

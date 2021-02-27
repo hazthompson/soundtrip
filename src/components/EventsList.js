@@ -23,7 +23,7 @@ const eventListStyles = makeStyles({
     background: `${GlobalStyles.darkTeal}`,
     color: 'white',
     marginBottom: '10px',
-    borderRadius: '15px',
+    borderRadius: '4px',
     height: '120px',
   },
   eventList__ticketLink: {
@@ -34,12 +34,12 @@ const eventListStyles = makeStyles({
     alignSelf: 'center',
     '&:hover': {
       cursor: 'pointer',
-      color: '#ee6f57',
+      color: `${GlobalStyles.accentOrange}`,
     },
   },
   eventList__image: {
     width: '100%',
-    height: '100%',
+    height: '120px',
   },
   eventList_infoContainer: {
     display: 'grid',
@@ -60,6 +60,7 @@ const eventListStyles = makeStyles({
 });
 
 function EventsList({ startDate, latLng }) {
+  console.log('start date', startDate);
   const classes = eventListStyles();
   const { setGlobalState } = useContext(EventContext);
   const { data: eventsData, loading: loadingEvents } = useQuery(EVENTS_QUERY, {
