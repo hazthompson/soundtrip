@@ -39,7 +39,7 @@ const eventListStyles = makeStyles({
   },
   eventList__image: {
     width: '100%',
-    height: '100%',
+    height: '120px',
   },
   eventList_infoContainer: {
     display: 'grid',
