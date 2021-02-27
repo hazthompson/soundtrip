@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import DatePicker from 'components/DatePicker';
 import { makeStyles } from '@material-ui/core/styles';
-import EventsList from 'components/EventsList';
+import EventsList from 'components/EventsList/EventsList';
 import LocationFinder from 'components/LocationFinder';
 import Playlist from 'components/Playlist';
 import EventContext from 'utils/EventContext';
