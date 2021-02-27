@@ -32,8 +32,17 @@ const theme = createMuiTheme({
     MuiPaper: {
       root: {
         backgroundColor: `${GlobalStyles.pinkWhite}`,
-        // color: `${GlobalStyles.midblue}`,
         fontFamily: `${GlobalStyles.bodyFont}`,
+      },
+    },
+    MuiPickersToolbar: {
+      toolbar: {
+        backgroundColor: `${GlobalStyles.darkBlue}`,
+      },
+    },
+    MuiPickersDay: {
+      daySelected: {
+        backgroundColor: `${GlobalStyles.darkBlue}`,
       },
     },
     MuiFormLabel: {
@@ -72,6 +81,7 @@ const useStyles = makeStyles({
     fontFamily: `${GlobalStyles.bodyFont}`,
     minHeight: '100vh',
     backgroundColor: `${GlobalStyles.darkBlue}`,
+    paddingBottom: '50px',
   },
 });
 

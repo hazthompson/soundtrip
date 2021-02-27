@@ -1,12 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
+import GlobalStyles from 'assets/GlobalStyles';
 
 const playlistStyles = makeStyles({
   playlist__container: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    background: `${GlobalStyles.darkTeal}`,
     gridColumn: '8 /span 4',
     width: '100%',
-    height: '70vh',
-    borderRadius: '4%',
+    height: '100%',
+    borderRadius: '15px',
   },
 });
 

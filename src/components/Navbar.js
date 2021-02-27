@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
   Navbar__logo: {
     fontFamily: `${GlobalStyles.logo}`,
     fontSize: '30px',
-    color: `${GlobalStyles.pinkWhite}`,
+    color: `#ff9a76`,
   },
 
   Navbar__locationContainer: {

@@ -3,6 +3,7 @@ import moment from 'moment';
 import { EVENTS_QUERY } from 'utils/queries';
 import { useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
 import GlobalStyles from 'assets/GlobalStyles';
 import EventContext from 'utils/EventContext';
 
@@ -17,31 +18,50 @@ const eventListStyles = makeStyles({
     gridRow: 2,
   },
   eventLists__eventContainer: {
-    padding: '1%',
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    background: `${GlobalStyles.darkTeal}`,
     color: 'white',
     marginBottom: '10px',
+    borderRadius: '15px',
+    height: '120px',
   },
   eventList__ticketLink: {
     color: 'white',
+    fontFamily: `${GlobalStyles.headerFont}`,
+    textDecoration: 'none',
+    width: '50%',
+    alignSelf: 'center',
     '&:hover': {
       cursor: 'pointer',
-      color: 'pink',
+      color: '#ee6f57',
     },
   },
   eventList__image: {
-    width: '200px',
-    height: '150px',
+    width: '100%',
+    height: '100%',
   },
-
+  eventList_infoContainer: {
+    display: 'grid',
+    textDecoration: 'none',
+    gridColumn: '2 /span2',
+    paddingLeft: '10px',
+    paddingTop: '10px',
+  },
   eventList_artistName: {
     fontWeight: 600,
+  },
+  eventList_eventInfo: {
+    fontSize: '14px',
+    fontWeight: 400,
+    display: 'grid',
+    alignContent: 'space-between',
   },
 });
 
 function EventsList({ startDate, latLng }) {
   const classes = eventListStyles();
-  const { globalState, setGlobalState } = useContext(EventContext);
+  const { setGlobalState } = useContext(EventContext);
   const { data: eventsData, loading: loadingEvents } = useQuery(EVENTS_QUERY, {
     variables: {
       startDate,
@@ -66,31 +86,32 @@ function EventsList({ startDate, latLng }) {
   } else {
     return (
       <div className={classes.eventLists__container}>
-        <div>{globalState.artists}</div>
         {eventsData.events.map((event, index) => (
-          <div className={classes.eventLists__eventContainer} key={index}>
+          <Card className={classes.eventLists__eventContainer} key={index}>
             <img
               className={classes.eventList__image}
               alt={event.artistName}
               src={event.imageUrl}
             />
-            <div className={classes.eventList_artistName}>
-              {event.artistName}
-            </div>
-            <p>{moment(event.date).format('MMM Do YYYY')}</p>
-            <div>Venue: {event.venue}</div>
-            <div>
-              Buy tickets here:{' '}
+            <div className={classes.eventList_infoContainer}>
+              <div>
+                <div className={classes.eventList_artistName}>
+                  {event.artistName}
+                </div>
+                <span className={classes.eventList_eventInfo}>
+                  {moment(event.date).format('Do MMM')} | {event.venue}
+                </span>
+              </div>
               <a
                 href={event.url}
                 target='_blank'
                 rel='noreferrer'
                 className={classes.eventList__ticketLink}
               >
-                {event.url}
+                Buy tickets
               </a>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
     );

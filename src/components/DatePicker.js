@@ -5,8 +5,9 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+// import GlobalStyles from 'assets/GlobalStyles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   datePicker: {
     justifySelf: 'Center',
   },

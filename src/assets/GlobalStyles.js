@@ -19,6 +19,13 @@ const GlobalStyles = {
   midblue: '#133b5c',
   darkTeal: '#1e5f74',
   pinkWhite: '#fcdab7',
+
+  //color palette option3:
+  accentYellow: '#FFFD82',
+  midnightBlue: '#2d3047',
+  burntOrange: '#e4572e',
+  powderBlue: '#669bbc',
+  turqouise: '#5bc0be',
 };
 
 export default GlobalStyles;
