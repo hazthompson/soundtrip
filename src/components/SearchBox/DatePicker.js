@@ -23,6 +23,8 @@ export default function DatePicker({ selectedDate, setSelectedDate }) {
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <div className={classes.datePicker}>
         <KeyboardDatePicker
+          disablePast
+          autoOk
           margin='normal'
           id='date-picker-dialog'
           label='Choose your date'

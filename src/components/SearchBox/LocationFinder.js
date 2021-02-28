@@ -25,10 +25,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LocationFinder({ setLatLng }) {
+export default function LocationFinder({ onChange, initialInputValue }) {
   const classes = useStyles();
   const [value, setValue] = useState(null);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(initialInputValue || '');
   const [options, setOptions] = useState([]);
 
   const fetch = useMemo(
@@ -38,6 +38,10 @@ export default function LocationFinder({ setLatLng }) {
       }, 200),
     []
   );
+
+  useEffect(() => {
+    setInputValue(initialInputValue || '');
+  }, [initialInputValue]);
 
   useEffect(() => {
     let active = true;
@@ -78,12 +82,12 @@ export default function LocationFinder({ setLatLng }) {
   function handleSelect(value) {
     geocodeByAddress(value)
       .then((results) => {
-        setLatLng({
+        onChange({
           lat: results[0].geometry.location.lat(),
           lng: results[0].geometry.location.lng(),
+          name: results[0].formatted_address,
         });
       })
-      .then(() => console.log('Success'))
       .catch((error) => console.error('Error', error));
   }
 
@@ -107,7 +111,7 @@ export default function LocationFinder({ setLatLng }) {
       autoComplete
       includeInputInList
       filterSelectedOptions
-      value={value}
+      inputValue={inputValue}
       onChange={handleChange}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);

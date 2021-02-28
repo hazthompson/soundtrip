@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
-
-import DatePicker from 'components/DatePicker';
+import { useHistory, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import EventsList from 'components/EventsList/EventsList';
-import LocationFinder from 'components/LocationFinder';
+import SearchBox from 'components/SearchBox/SearchBox';
 import Playlist from 'components/Playlist';
 import EventContext from 'utils/EventContext';
 import {
@@ -60,13 +59,33 @@ const repopuateTempPlaylist = async (
   return playlistId;
 };
 
-function Homepage() {
+function EventsPage() {
   const classes = eventListStyles();
+  const history = useHistory();
+  const location = useLocation();
   const [latLng, setLatLng] = useState();
-  const [selectedDate, setSelectedDate] = useState();
+  const [startDate, setStartDate] = useState();
+  const [locationName, setLocationName] = useState();
   const { globalState, setGlobalState } = useContext(EventContext);
 
   const { currentUser, artistNames, tempPlaylistId } = globalState;
+
+  useEffect(() => {
+    const lat = location.state?.lat || localStorage.getItem('location-lat');
+    const lng = location.state?.lng || localStorage.getItem('location-lng');
+    const startDate =
+      location.state?.startDate || localStorage.getItem('start-date');
+    const locationName =
+      location.state?.locationName || localStorage.getItem('location-name');
+
+    if (lat && lng && startDate && locationName) {
+      setLatLng({ lat, lng });
+      setStartDate(startDate);
+      setLocationName(locationName);
+    } else {
+      history.replace('/');
+    }
+  }, [history, location.state]);
 
   useEffect(() => {
     if (currentUser?.id && artistNames.length) {
@@ -83,18 +102,13 @@ function Homepage() {
 
   return (
     <div className={classes.homepage}>
-      {latLng && <EventsList startDate={selectedDate} latLng={latLng} />}
-      <div className={classes.homepage__locationDateContainer}>
-        <LocationFinder setLatLng={setLatLng} />
-        <DatePicker
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-        />
-      </div>
+      {latLng && <EventsList startDate={startDate} latLng={latLng} />}
+
+      <SearchBox startDate={startDate} initialLocationName={locationName} />
 
       {tempPlaylistId && <Playlist playlistId={tempPlaylistId} />}
     </div>
   );
 }
 
-export default Homepage;
+export default EventsPage;

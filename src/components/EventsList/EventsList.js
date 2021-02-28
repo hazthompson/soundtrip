@@ -69,9 +69,23 @@ function EventsList({ startDate, latLng }) {
   });
   const numberOfSkeletons = 6;
 
+  const filterDuplicatedEvents = (events) => {
+    let artistsNames = [];
+    let returnArray = [];
+    events.forEach((event) => {
+      if (!artistsNames.includes(event.artistName)) {
+        artistsNames.push(event.artistName);
+        returnArray.push(event);
+      }
+    });
+    return returnArray;
+  };
+
   useEffect(() => {
     if (eventsData) {
-      const newArtistArray = eventsData.events.map((event) => event.artistName);
+      const newArtistArray = [
+        ...new Set(eventsData.events.map((event) => event.artistName)),
+      ];
 
       setGlobalState((currentState) => ({
         ...currentState,
@@ -83,37 +97,38 @@ function EventsList({ startDate, latLng }) {
   return (
     <div className={classes.eventLists__container}>
       {loadingEvents
-        ? [...Array(numberOfSkeletons)].map((e) => (
-            <EventsListSkeleton key={e} />
-          ))
-        : eventsData.events.map((event, index) => (
-            <>
-              <Card className={classes.eventLists__eventContainer} key={index}>
-                <img
-                  className={classes.eventList__image}
-                  alt={event.artistName}
-                  src={event.imageUrl}
-                />
-                <div className={classes.eventList_infoContainer}>
-                  <div>
-                    <div className={classes.eventList_artistName}>
-                      {event.artistName}
-                    </div>
-                    <span className={classes.eventList_eventInfo}>
-                      {moment(event.date).format('Do MMM')} | {event.venue}
-                    </span>
+        ? [...Array(numberOfSkeletons)].map((e, i) => {
+            return <EventsListSkeleton key={i} />;
+          })
+        : filterDuplicatedEvents(eventsData.events).map((event, index) => (
+            <Card
+              className={classes.eventLists__eventContainer}
+              key={event.ticketmasterId}
+            >
+              <img
+                className={classes.eventList__image}
+                alt={event.artistName}
+                src={event.imageUrl}
+              />
+              <div className={classes.eventList_infoContainer}>
+                <div>
+                  <div className={classes.eventList_artistName}>
+                    {event.artistName}
                   </div>
-                  <a
-                    href={event.url}
-                    target='_blank'
-                    rel='noreferrer'
-                    className={classes.eventList__ticketLink}
-                  >
-                    Buy tickets
-                  </a>
+                  <span className={classes.eventList_eventInfo}>
+                    {moment(event.date).format('Do MMM')} | {event.venue}
+                  </span>
                 </div>
-              </Card>
-            </>
+                <a
+                  href={event.url}
+                  target='_blank'
+                  rel='noreferrer'
+                  className={classes.eventList__ticketLink}
+                >
+                  Buy tickets
+                </a>
+              </div>
+            </Card>
           ))}
     </div>
   );

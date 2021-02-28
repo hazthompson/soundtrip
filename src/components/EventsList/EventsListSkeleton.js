@@ -28,7 +28,7 @@ function EventsListSkeleton() {
 
   return (
     <div className={classes.eventLists__loadingContainer}>
-      <Skeleton variant='rect' width={210} height={118} borderRadius={4} />
+      <Skeleton variant='rect' width={210} height={118} borderradius={4} />
       <div className={classes.eventLists__loadingTextContainer}>
         <div style={{ gridColumn: '1 / span 2' }}>
           <Skeleton variant='text' />
