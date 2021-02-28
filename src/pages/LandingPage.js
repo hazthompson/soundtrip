@@ -24,7 +24,7 @@ function LandingPage() {
 
   return (
     <div className={classes.landingPage}>
-      <SearchBox landingPage />
+      <SearchBox landingPage startDate={new Date()} />
     </div>
   );
 }
