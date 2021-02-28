@@ -88,7 +88,7 @@ const useStyles = makeStyles({
 });
 
 function App() {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState(Cookies.get('spotifyAuthToken'));
   const classes = useStyles();
 
   useEffect(() => {
