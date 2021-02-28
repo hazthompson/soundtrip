@@ -19,38 +19,57 @@ const eventListStyles = makeStyles((theme) => ({
   },
 }));
 
-function SearchBox({ landingPage, startDate }) {
+function SearchBox({ landingPage, startDate, initialLocationName }) {
   const classes = eventListStyles();
   let history = useHistory();
-  const [latLng, setLatLng] = useState();
+  const [lat, setLat] = useState();
+  const [lng, setLng] = useState();
+  const [locationName, setLocationName] = useState(initialLocationName);
   const [selectedDate, setSelectedDate] = useState(startDate);
+
+  const handleLocationChange = (location) => {
+    setLat(location.lat);
+    setLng(location.lng);
+    setLocationName(location.name);
+  };
 
   useEffect(() => {
     setSelectedDate(startDate);
   }, [startDate]);
 
-  const handleSubmit = () => {
-    if (latLng.lat && latLng.lng) {
-      console.log('date', selectedDate);
+  useEffect(() => {
+    setLocationName(initialLocationName);
+  }, [initialLocationName]);
 
-      localStorage.setItem('location-lat', latLng.lat);
-      localStorage.setItem('location-lng', latLng.lng);
-      localStorage.setItem('start-date', selectedDate.toISOString());
+  const handleDateChange = (dateObject) => {
+    setSelectedDate(dateObject.toISOString());
+  };
+
+  const handleSubmit = () => {
+    if (lat && lng && locationName && selectedDate) {
+      localStorage.setItem('location-lat', lat);
+      localStorage.setItem('location-lng', lng);
+      localStorage.setItem('start-date', selectedDate);
+      localStorage.setItem('location-name', locationName);
 
       history.push(`/events`, {
-        lat: latLng.lat,
-        lng: latLng.lng,
-        startDate: selectedDate.toISOString(),
+        lat,
+        lng,
+        startDate: selectedDate,
+        locationName,
       });
     }
   };
 
   return (
     <div className={classes.searchBox__Container}>
-      <LocationFinder setLatLng={setLatLng} />
+      <LocationFinder
+        initialInputValue={locationName}
+        onChange={handleLocationChange}
+      />
       <DatePicker
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
+        selectedDate={selectedDate ? Date.parse(selectedDate) : null}
+        setSelectedDate={handleDateChange}
       />
 
       <IconButton onClick={handleSubmit} aria-label='search'>

@@ -107,10 +107,10 @@ function App() {
                   <Route path='/' exact>
                     <LandingPage />
                   </Route>
-                  <Route path='/search/:lat/:lng/:year/:month/:day' exact>
+                  <Route path='/events' exact>
                     <EventsPage />
                   </Route>
-                  {/* <Redirect to='/' /> */}
+                  <Redirect to='/' />
                 </Switch>
               </ThemeProvider>
             </SpotifyApiContext.Provider>

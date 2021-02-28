@@ -65,6 +65,7 @@ function EventsPage() {
   const location = useLocation();
   const [latLng, setLatLng] = useState();
   const [startDate, setStartDate] = useState();
+  const [locationName, setLocationName] = useState();
   const { globalState, setGlobalState } = useContext(EventContext);
 
   const { currentUser, artistNames, tempPlaylistId } = globalState;
@@ -74,10 +75,13 @@ function EventsPage() {
     const lng = location.state?.lng || localStorage.getItem('location-lng');
     const startDate =
       location.state?.startDate || localStorage.getItem('start-date');
-    console.log('local stroage', lat, lng, startDate);
-    if (lat && lng && startDate) {
+    const locationName =
+      location.state?.locationName || localStorage.getItem('location-name');
+
+    if (lat && lng && startDate && locationName) {
       setLatLng({ lat, lng });
       setStartDate(startDate);
+      setLocationName(locationName);
     } else {
       history.replace('/');
     }
@@ -100,7 +104,7 @@ function EventsPage() {
     <div className={classes.homepage}>
       {latLng && <EventsList startDate={startDate} latLng={latLng} />}
 
-      <SearchBox startDate={startDate} />
+      <SearchBox startDate={startDate} initialLocationName={locationName} />
 
       {tempPlaylistId && <Playlist playlistId={tempPlaylistId} />}
     </div>

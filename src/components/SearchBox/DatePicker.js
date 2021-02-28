@@ -16,7 +16,6 @@ export default function DatePicker({ selectedDate, setSelectedDate }) {
   const classes = useStyles();
 
   const handleDateChange = (date) => {
-    console.log('date change', date);
     setSelectedDate(date);
   };
 
