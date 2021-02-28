@@ -5,6 +5,8 @@ const defaultGlobalState = {
   currentUser: null,
   artistNames: [],
   tempPlaylistId: Cookies.get('tempPlaylistId') || null,
+  latLng: {},
+  selectedDate: null,
 };
 const EventContext = createContext();
 

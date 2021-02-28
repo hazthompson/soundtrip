@@ -11,8 +11,10 @@ import Cookies from 'js-cookie';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import GlobalStyles from 'assets/GlobalStyles';
-import Homepage from 'pages/Homepage';
+// import Homepage from 'pages/Homepage';
+import LandingPage from 'pages/LandingPage';
 import Navbar from 'components/Navbar';
+import EventsPage from 'pages/EventsPage';
 import AuthPage from 'components/AuthPage';
 
 const theme = createMuiTheme((theme) => ({
@@ -103,9 +105,12 @@ function App() {
                 <Navbar />
                 <Switch>
                   <Route path='/' exact>
-                    <Homepage />
+                    <LandingPage />
                   </Route>
-                  <Redirect to='/' />
+                  <Route path='/search/:lat/:lng/:year/:month/:day' exact>
+                    <EventsPage />
+                  </Route>
+                  {/* <Redirect to='/' /> */}
                 </Switch>
               </ThemeProvider>
             </SpotifyApiContext.Provider>

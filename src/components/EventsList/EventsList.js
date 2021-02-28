@@ -83,9 +83,9 @@ function EventsList({ startDate, latLng }) {
   return (
     <div className={classes.eventLists__container}>
       {loadingEvents
-        ? [...Array(numberOfSkeletons)].map((e) => (
-            <EventsListSkeleton key={e} />
-          ))
+        ? [...Array(numberOfSkeletons)].map((e, i) => {
+            return <EventsListSkeleton key={i} />;
+          })
         : eventsData.events.map((event, index) => (
             <>
               <Card className={classes.eventLists__eventContainer} key={index}>
