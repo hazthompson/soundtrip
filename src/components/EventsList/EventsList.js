@@ -69,9 +69,23 @@ function EventsList({ startDate, latLng }) {
   });
   const numberOfSkeletons = 6;
 
+  const filterDuplicatedEvents = (events) => {
+    let artistsNames = [];
+    let returnArray = [];
+    events.forEach((event) => {
+      if (!artistsNames.includes(event.artistName)) {
+        artistsNames.push(event.artistName);
+        returnArray.push(event);
+      }
+    });
+    return returnArray;
+  };
+
   useEffect(() => {
     if (eventsData) {
-      const newArtistArray = eventsData.events.map((event) => event.artistName);
+      const newArtistArray = [
+        ...new Set(eventsData.events.map((event) => event.artistName)),
+      ];
 
       setGlobalState((currentState) => ({
         ...currentState,
@@ -86,7 +100,7 @@ function EventsList({ startDate, latLng }) {
         ? [...Array(numberOfSkeletons)].map((e, i) => {
             return <EventsListSkeleton key={i} />;
           })
-        : eventsData.events.map((event, index) => (
+        : filterDuplicatedEvents(eventsData.events).map((event, index) => (
             <Card
               className={classes.eventLists__eventContainer}
               key={event.ticketmasterId}
