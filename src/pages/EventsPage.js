@@ -1,5 +1,5 @@
-import { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import EventsList from 'components/EventsList/EventsList';
 import SearchBox from 'components/SearchBox/SearchBox';
@@ -61,12 +61,27 @@ const repopuateTempPlaylist = async (
 
 function EventsPage() {
   const classes = eventListStyles();
-  let { lat, lng, year, month, day } = useParams();
-  const latLng = { lat: lat, lng: lng };
-  const selectedDate = new Date(year, month - 1, day); //month is 0 indexed
+  const history = useHistory();
+  const location = useLocation();
+  const [latLng, setLatLng] = useState();
+  const [startDate, setStartDate] = useState();
   const { globalState, setGlobalState } = useContext(EventContext);
 
   const { currentUser, artistNames, tempPlaylistId } = globalState;
+
+  useEffect(() => {
+    const lat = location.state?.lat || localStorage.getItem('location-lat');
+    const lng = location.state?.lng || localStorage.getItem('location-lng');
+    const startDate =
+      location.state?.startDate || localStorage.getItem('start-date');
+    console.log('local stroage', lat, lng, startDate);
+    if (lat && lng && startDate) {
+      setLatLng({ lat, lng });
+      setStartDate(startDate);
+    } else {
+      history.replace('/');
+    }
+  }, [history, location.state]);
 
   useEffect(() => {
     if (currentUser?.id && artistNames.length) {
@@ -83,9 +98,9 @@ function EventsPage() {
 
   return (
     <div className={classes.homepage}>
-      {latLng && <EventsList startDate={selectedDate} latLng={latLng} />}
+      {latLng && <EventsList startDate={startDate} latLng={latLng} />}
 
-      <SearchBox startDate={selectedDate} />
+      <SearchBox startDate={startDate} />
 
       {tempPlaylistId && <Playlist playlistId={tempPlaylistId} />}
     </div>

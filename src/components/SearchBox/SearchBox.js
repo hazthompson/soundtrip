@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import DatePicker from 'components/SearchBox/DatePicker';
-import { getDate, getMonth, getYear } from 'date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
@@ -27,29 +26,24 @@ function SearchBox({ landingPage, startDate }) {
   const [selectedDate, setSelectedDate] = useState(startDate);
 
   useEffect(() => {
-    console.log('search box', startDate);
     setSelectedDate(startDate);
   }, [startDate]);
 
   const handleSubmit = () => {
     if (latLng.lat && latLng.lng) {
       console.log('date', selectedDate);
-      const year = getYear(selectedDate);
-      const month = getMonth(selectedDate) + 1; //month is 0 indexed
-      const day = getDate(selectedDate);
-      console.log('year', { year: year, month: month, day: day });
 
-      history.push(
-        `/search/${latLng.lat}/${latLng.lng}/${year}/${month}/${day}`
-      );
-    } else {
-      console.log('latlng', latLng);
+      localStorage.setItem('location-lat', latLng.lat);
+      localStorage.setItem('location-lng', latLng.lng);
+      localStorage.setItem('start-date', selectedDate.toISOString());
+
+      history.push(`/events`, {
+        lat: latLng.lat,
+        lng: latLng.lng,
+        startDate: selectedDate.toISOString(),
+      });
     }
   };
-
-  useEffect(() => {
-    console.log('changing');
-  }, [landingPage]);
 
   return (
     <div className={classes.searchBox__Container}>
