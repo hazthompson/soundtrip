@@ -35,7 +35,7 @@ function SearchBox({ landingPage, startDate }) {
     if (latLng.lat && latLng.lng) {
       console.log('date', selectedDate);
       const year = getYear(selectedDate);
-      const month = getMonth(selectedDate) + 1;
+      const month = getMonth(selectedDate) + 1; //month is 0 indexed
       const day = getDate(selectedDate);
       console.log('year', { year: year, month: month, day: day });
 

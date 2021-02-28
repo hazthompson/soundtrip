@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import EventsList from 'components/EventsList/EventsList';
@@ -63,7 +63,7 @@ function EventsPage() {
   const classes = eventListStyles();
   let { lat, lng, year, month, day } = useParams();
   const latLng = { lat: lat, lng: lng };
-  const selectedDate = new Date(year, month, day);
+  const selectedDate = new Date(year, month - 1, day); //month is 0 indexed
   const { globalState, setGlobalState } = useContext(EventContext);
 
   const { currentUser, artistNames, tempPlaylistId } = globalState;
