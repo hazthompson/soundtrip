@@ -87,33 +87,34 @@ function EventsList({ startDate, latLng }) {
             return <EventsListSkeleton key={i} />;
           })
         : eventsData.events.map((event, index) => (
-            <>
-              <Card className={classes.eventLists__eventContainer} key={index}>
-                <img
-                  className={classes.eventList__image}
-                  alt={event.artistName}
-                  src={event.imageUrl}
-                />
-                <div className={classes.eventList_infoContainer}>
-                  <div>
-                    <div className={classes.eventList_artistName}>
-                      {event.artistName}
-                    </div>
-                    <span className={classes.eventList_eventInfo}>
-                      {moment(event.date).format('Do MMM')} | {event.venue}
-                    </span>
+            <Card
+              className={classes.eventLists__eventContainer}
+              key={event.ticketmasterId}
+            >
+              <img
+                className={classes.eventList__image}
+                alt={event.artistName}
+                src={event.imageUrl}
+              />
+              <div className={classes.eventList_infoContainer}>
+                <div>
+                  <div className={classes.eventList_artistName}>
+                    {event.artistName}
                   </div>
-                  <a
-                    href={event.url}
-                    target='_blank'
-                    rel='noreferrer'
-                    className={classes.eventList__ticketLink}
-                  >
-                    Buy tickets
-                  </a>
+                  <span className={classes.eventList_eventInfo}>
+                    {moment(event.date).format('Do MMM')} | {event.venue}
+                  </span>
                 </div>
-              </Card>
-            </>
+                <a
+                  href={event.url}
+                  target='_blank'
+                  rel='noreferrer'
+                  className={classes.eventList__ticketLink}
+                >
+                  Buy tickets
+                </a>
+              </div>
+            </Card>
           ))}
     </div>
   );
