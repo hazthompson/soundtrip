@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
 import { geocodeByAddress } from 'react-places-autocomplete';
-// import GlobalStyles from 'assets/GlobalStyles';
+import { useWindowSize } from 'utils/hooks';
 
 const autocompleteService = { current: null };
 
@@ -16,8 +16,10 @@ const useStyles = makeStyles((theme) => ({
   locationFinder: {
     marginTop: '16px',
     marginBottom: '8px',
-    justifySelf: 'center',
-    width: '250px',
+    paddingRight: '15px',
+    [theme.breakpoints.down('xs')]: {
+      gridColumn: '1 /span2',
+    },
   },
   locationFinder__icon: {
     color: theme.palette.text.secondary,
@@ -27,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LocationFinder({ onChange, initialInputValue }) {
   const classes = useStyles();
+  const { isMobile } = useWindowSize();
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState(initialInputValue || '');
   const [options, setOptions] = useState([]);
@@ -119,7 +122,7 @@ export default function LocationFinder({ onChange, initialInputValue }) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label='Choose your location'
+          label={isMobile ? '' : 'Choose your location'}
           variant='standard'
           fullWidth
           InputLabelProps={{

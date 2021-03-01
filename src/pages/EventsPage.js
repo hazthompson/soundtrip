@@ -14,20 +14,10 @@ import {
 } from 'utils/spotifyHelpers';
 
 const eventListStyles = makeStyles((theme) => ({
-  homepage: {
+  eventsPage: {
     display: 'grid',
     gridTemplateColumns: 'repeat(12, 1fr)',
     justifySelf: 'center',
-  },
-  homepage__locationDateContainer: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gridColumn: '4 /span 6',
-    gridRow: 1,
-    justifyContent: 'center',
-    backgroundColor: theme.palette.grey[200],
-    borderRadius: '40px',
-    marginBottom: '50px',
   },
 }));
 
@@ -101,12 +91,10 @@ function EventsPage() {
   }, [currentUser, artistNames, setGlobalState]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className={classes.homepage}>
-      {latLng && <EventsList startDate={startDate} latLng={latLng} />}
-
+    <div className={classes.eventsPage}>
       <SearchBox startDate={startDate} initialLocationName={locationName} />
-
       {tempPlaylistId && <Playlist playlistId={tempPlaylistId} />}
+      {latLng && <EventsList startDate={startDate} latLng={latLng} />}
     </div>
   );
 }

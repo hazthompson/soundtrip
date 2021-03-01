@@ -14,6 +14,10 @@ const eventListStyles = makeStyles((theme) => ({
     overflowY: 'scroll',
     gridColumn: '2 /span 4',
     gridRow: 2,
+    [theme.breakpoints.down('xs')]: {
+      gridColumn: '2 /span 10',
+      gridRow: 3,
+    },
   },
   eventLists__eventContainer: {
     display: 'grid',
@@ -133,5 +137,5 @@ function EventsList({ startDate, latLng }) {
     </div>
   );
 }
-
+// replace buyticket with ticket icon for mobile
 export default EventsList;

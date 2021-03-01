@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import LocationFinder from 'components/SearchBox/LocationFinder';
 
-const eventListStyles = makeStyles((theme) => ({
+const searchBoxStyles = makeStyles((theme) => ({
   searchBox__Container: {
     gridColumn: '4 /span 6',
     gridRow: 1,
@@ -14,13 +14,28 @@ const eventListStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[200],
     borderRadius: '50px',
     marginBottom: '50px',
+    paddingLeft: '25px',
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr 60px',
+    [theme.breakpoints.up('xs')]: {
+      display: 'grid',
+      gridTemplateColumns: '45% 45% 25px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      display: 'grid',
+      gridColumn: '2 /span 10',
+    },
+    searchBox__icon: {
+      [theme.breakpoints.down('xs')]: {
+        display: 'grid',
+        justifySelf: 'center',
+        gridColumn: '1 / span2',
+      },
+    },
   },
 }));
 
-function SearchBox({ landingPage, startDate, initialLocationName }) {
-  const classes = eventListStyles();
+function SearchBox({ startDate, initialLocationName }) {
+  const classes = searchBoxStyles();
   let history = useHistory();
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
@@ -72,7 +87,11 @@ function SearchBox({ landingPage, startDate, initialLocationName }) {
         setSelectedDate={handleDateChange}
       />
 
-      <IconButton onClick={handleSubmit} aria-label='search'>
+      <IconButton
+        onClick={handleSubmit}
+        aria-label='search-hellooo'
+        className={classes.searchBox__icon}
+      >
         <SearchIcon />
       </IconButton>
     </div>
