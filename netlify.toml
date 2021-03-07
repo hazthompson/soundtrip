@@ -1,0 +1,7 @@
+# This was originally in the build/_redirects file taken from Netlify for SPAs: https://docs.netlify.com/routing/redirects/rewrites-proxies/#history-pushstate-and-single-page-apps
+# It was later moved here, following these instructions: https://stackoverflow.com/a/56209266
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
