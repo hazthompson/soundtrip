@@ -133,6 +133,7 @@ export default function LocationFinder({ onChange, initialInputValue }) {
           variant={isMobile ? 'outlined' : 'standard'}
           fullWidth
           InputProps={{
+            ...params.InputProps,
             className: classes.input,
           }}
           InputLabelProps={{
