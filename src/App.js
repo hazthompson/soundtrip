@@ -11,7 +11,6 @@ import Cookies from 'js-cookie';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import GlobalStyles from 'assets/GlobalStyles';
-// import Homepage from 'pages/Homepage';
 import LandingPage from 'pages/LandingPage';
 import Navbar from 'components/Navbar';
 import EventsPage from 'pages/EventsPage';
@@ -39,12 +38,12 @@ const theme = createMuiTheme((theme) => ({
     },
     MuiPickersToolbar: {
       toolbar: {
-        backgroundColor: `${GlobalStyles.darkBlue}`,
+        backgroundColor: `${GlobalStyles.darkBlue}`, //not picking up this style
       },
     },
     MuiPickersDay: {
       daySelected: {
-        backgroundColor: `${GlobalStyles.darkBlue}`,
+        backgroundColor: `${GlobalStyles.darkBlue}`, //not picking up this style
       },
     },
     MuiFormLabel: {

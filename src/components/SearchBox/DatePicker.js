@@ -10,12 +10,14 @@ import { useWindowSize } from 'utils/hooks';
 const useStyles = makeStyles((theme) => ({
   datePicker: {
     justifySelf: 'Center',
-    paddingLeft: '15px',
+    paddingLeft: 15,
     [theme.breakpoints.down('xs')]: {
-      paddingRight: '15px',
-      gridColumn: '1 /span2',
-      paddingLeft: '0px',
+      paddingLeft: 0,
+      width: '100%',
     },
+  },
+  input: {
+    backgroundColor: theme.palette.grey[200],
   },
 }));
 
@@ -30,6 +32,11 @@ export default function DatePicker({ selectedDate, setSelectedDate }) {
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <div className={classes.datePicker}>
         <KeyboardDatePicker
+          fullWidth
+          inputVariant={isMobile ? 'outlined' : 'standard'}
+          InputProps={{
+            className: classes.input,
+          }}
           disablePast
           autoOk
           margin='normal'

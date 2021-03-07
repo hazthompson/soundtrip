@@ -14,16 +14,22 @@ const autocompleteService = { current: null };
 
 const useStyles = makeStyles((theme) => ({
   locationFinder: {
-    marginTop: '16px',
-    marginBottom: '8px',
-    paddingRight: '15px',
+    marginTop: 16, //matching materialUI datepicker margin top and bottom for alignement
+    marginBottom: 8, //matching materialUI datepicker margin top and bottom for alignement
+    [theme.breakpoints.up('s')]: {
+      paddingRight: 15,
+    },
     [theme.breakpoints.down('xs')]: {
-      gridColumn: '1 /span2',
+      paddingTop: 15,
+      PaddingRight: 0,
     },
   },
   locationFinder__icon: {
     color: theme.palette.text.secondary,
     marginRight: theme.spacing(2),
+  },
+  input: {
+    backgroundColor: theme.palette.grey[200],
   },
 }));
 
@@ -105,6 +111,7 @@ export default function LocationFinder({ onChange, initialInputValue }) {
   return (
     <Autocomplete
       className={classes.locationFinder}
+      fullWidth
       id='google-map-location-search'
       getOptionLabel={(option) =>
         typeof option === 'string' ? option : option.description
@@ -123,8 +130,11 @@ export default function LocationFinder({ onChange, initialInputValue }) {
         <TextField
           {...params}
           label={isMobile ? '' : 'Choose your location'}
-          variant='standard'
+          variant={isMobile ? 'outlined' : 'standard'}
           fullWidth
+          InputProps={{
+            className: classes.input,
+          }}
           InputLabelProps={{
             shrink: true,
           }}

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   Navbar__container: {
     gridColumn: '1 /span 12',
     backgroundColor: `${GlobalStyles.backgroundColor}`,
-    marginBottom: '10px',
+    marginBottom: 10,
     boxShadow: 'none',
   },
   Navbar__toolbar: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
   Navbar__logo: {
     fontFamily: `${GlobalStyles.logo}`,
-    fontSize: '30px',
+    fontSize: 30,
     color: `${GlobalStyles.accentOrange}`,
   },
 
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: `${GlobalStyles.headerFont}`,
     display: 'flex',
     justifyContent: 'center',
-    fontSize: '30px',
+    fontSize: 30,
   },
   Navbar__icon: {
     fontFamily: `${GlobalStyles.headerFont}`,
