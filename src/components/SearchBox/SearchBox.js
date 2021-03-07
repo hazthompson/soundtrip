@@ -55,7 +55,7 @@ const searchBoxStyles = makeStyles((theme) => ({
   },
 }));
 
-function SearchBox({ startDate, initialLocationName }) {
+function SearchBox({ startDate, initialLocationName, landingPage }) {
   const classes = searchBoxStyles();
   const { isMobile } = useWindowSize();
   let history = useHistory();
@@ -83,6 +83,9 @@ function SearchBox({ startDate, initialLocationName }) {
   };
 
   const handleSubmit = () => {
+    if (isMobile && !landingPage) {
+      history.push('/');
+    }
     if (lat && lng && locationName && selectedDate) {
       localStorage.setItem('location-lat', lat);
       localStorage.setItem('location-lng', lng);
@@ -106,17 +109,20 @@ function SearchBox({ startDate, initialLocationName }) {
       alignItems='center'
       justifyContent='center'
     >
-      <LocationFinder
-        initialInputValue={locationName}
-        onChange={handleLocationChange}
-      />
+      {landingPage && (
+        <>
+          <LocationFinder
+            initialInputValue={locationName}
+            onChange={handleLocationChange}
+          />
 
-      <DatePicker
-        selectedDate={selectedDate ? Date.parse(selectedDate) : null}
-        setSelectedDate={handleDateChange}
-      />
-
-      <Box mt={1}>
+          <DatePicker
+            selectedDate={selectedDate ? Date.parse(selectedDate) : null}
+            setSelectedDate={handleDateChange}
+          />
+        </>
+      )}
+      <Box mt={1} mb={5}>
         <Button
           size='large'
           onClick={handleSubmit}
