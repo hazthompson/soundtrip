@@ -8,25 +8,34 @@ import { makeStyles } from '@material-ui/core/styles';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
 import { geocodeByAddress } from 'react-places-autocomplete';
-// import GlobalStyles from 'assets/GlobalStyles';
+import { useWindowSize } from 'utils/hooks';
 
 const autocompleteService = { current: null };
 
 const useStyles = makeStyles((theme) => ({
   locationFinder: {
-    marginTop: '16px',
-    marginBottom: '8px',
-    justifySelf: 'center',
-    width: '250px',
+    marginTop: 16, //matching materialUI datepicker margin top and bottom for alignement
+    marginBottom: 8, //matching materialUI datepicker margin top and bottom for alignement
+    [theme.breakpoints.up('s')]: {
+      paddingRight: 15,
+    },
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: 15,
+      PaddingRight: 0,
+    },
   },
   locationFinder__icon: {
     color: theme.palette.text.secondary,
     marginRight: theme.spacing(2),
   },
+  input: {
+    backgroundColor: theme.palette.grey[200],
+  },
 }));
 
 export default function LocationFinder({ onChange, initialInputValue }) {
   const classes = useStyles();
+  const { isMobile } = useWindowSize();
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState(initialInputValue || '');
   const [options, setOptions] = useState([]);
@@ -102,6 +111,7 @@ export default function LocationFinder({ onChange, initialInputValue }) {
   return (
     <Autocomplete
       className={classes.locationFinder}
+      fullWidth
       id='google-map-location-search'
       getOptionLabel={(option) =>
         typeof option === 'string' ? option : option.description
@@ -119,9 +129,12 @@ export default function LocationFinder({ onChange, initialInputValue }) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label='Choose your location'
-          variant='standard'
+          label={isMobile ? '' : 'Choose your location'}
+          variant={isMobile ? 'outlined' : 'standard'}
           fullWidth
+          InputProps={{
+            className: classes.input,
+          }}
           InputLabelProps={{
             shrink: true,
           }}

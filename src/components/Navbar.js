@@ -6,11 +6,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import SettingsIcon from '@material-ui/icons/Settings';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Cookies from 'js-cookie';
 import EventContext from 'utils/EventContext';
 import { deleteTempPlaylist } from 'utils/spotifyHelpers';
+import { useWindowSize } from 'utils/hooks';
 
 import GlobalStyles from 'assets/GlobalStyles';
 
@@ -18,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   Navbar__container: {
     gridColumn: '1 /span 12',
     backgroundColor: `${GlobalStyles.backgroundColor}`,
-    marginBottom: '10px',
+    marginBottom: 10,
     boxShadow: 'none',
   },
   Navbar__toolbar: {
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
   Navbar__logo: {
     fontFamily: `${GlobalStyles.logo}`,
-    fontSize: '30px',
+    fontSize: 30,
     color: `${GlobalStyles.accentOrange}`,
   },
 
@@ -37,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: `${GlobalStyles.headerFont}`,
     display: 'flex',
     justifyContent: 'center',
-    fontSize: '30px',
+    fontSize: 30,
   },
   Navbar__icon: {
     fontFamily: `${GlobalStyles.headerFont}`,
@@ -68,6 +70,7 @@ const handleLogout = (tempPlaylistId) => async () => {
 
 function Navbar() {
   const classes = useStyles();
+  const { isMobile } = useWindowSize();
   const { data: userData, error, loading } = useUser();
   const { globalState, setGlobalState } = useContext(EventContext);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -111,8 +114,14 @@ function Navbar() {
             onClick={handleMenuClick}
             className={classes.Navbar__optionsDropDown}
           >
-            <span>{userData?.display_name.toUpperCase()}</span>
-            <ArrowDropDownIcon style={{ fill: '#eeeeee' }} />
+            {isMobile ? (
+              <SettingsIcon />
+            ) : (
+              <>
+                <span>{userData?.display_name.toUpperCase()}</span>
+                <ArrowDropDownIcon style={{ fill: '#eeeeee' }} />
+              </>
+            )}
           </Button>
           <Menu
             id='simple-menu'

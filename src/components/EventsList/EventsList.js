@@ -14,18 +14,22 @@ const eventListStyles = makeStyles((theme) => ({
     overflowY: 'scroll',
     gridColumn: '2 /span 4',
     gridRow: 2,
+    [theme.breakpoints.down('xs')]: {
+      gridColumn: '2 /span 10',
+      gridRow: 3,
+    },
   },
   eventLists__eventContainer: {
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 1fr)',
     background: `${GlobalStyles.darkTeal}`,
-    color: 'white',
-    marginBottom: '10px',
-    borderRadius: '4px',
-    height: '120px',
+    color: theme.palette.grey[200],
+    marginBottom: 10,
+    borderRadius: 4,
+    height: 120,
   },
   eventList__ticketLink: {
-    color: 'white',
+    color: theme.palette.grey[200],
     fontFamily: `${GlobalStyles.headerFont}`,
     textDecoration: 'none',
     width: '50%',
@@ -37,20 +41,20 @@ const eventListStyles = makeStyles((theme) => ({
   },
   eventList__image: {
     width: '100%',
-    height: '120px',
+    height: 120,
   },
   eventList_infoContainer: {
     display: 'grid',
     textDecoration: 'none',
     gridColumn: '2 /span2',
-    paddingLeft: '10px',
-    paddingTop: '10px',
+    paddingLeft: 10,
+    paddingTop: 10,
   },
   eventList_artistName: {
     fontWeight: 600,
   },
   eventList_eventInfo: {
-    fontSize: '14px',
+    fontSize: 14,
     fontWeight: 400,
     display: 'grid',
     alignContent: 'space-between',
@@ -133,5 +137,5 @@ function EventsList({ startDate, latLng }) {
     </div>
   );
 }
-
+// replace buyticket with ticket icon for mobile
 export default EventsList;
