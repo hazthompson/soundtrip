@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import LocationFinder from 'components/SearchBox/LocationFinder';
 import { useWindowSize } from 'utils/hooks';
-import GlobalStyles from 'assets/GlobalStyles';
 
 const searchBoxStyles = makeStyles((theme) => ({
   searchBox__Container: {
