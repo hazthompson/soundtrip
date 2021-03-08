@@ -8,32 +8,28 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import LocationFinder from 'components/SearchBox/LocationFinder';
 import { useWindowSize } from 'utils/hooks';
+import GlobalStyles from 'assets/GlobalStyles';
 
 const searchBoxStyles = makeStyles((theme) => ({
   searchBox__Container: {
     gridColumn: '4 /span 6',
+    display: 'grid',
     gridRow: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     backgroundColor: theme.palette.grey[200],
     borderRadius: 50,
     marginBottom: 50,
-    paddingLeft: 25,
-    display: 'grid',
+    paddingLeft: 30,
+
     [theme.breakpoints.up('xs')]: {
-      display: 'grid',
-      gridTemplateColumns: '45% 45% 25px',
+      gridTemplateColumns: '40%  40% 12%',
     },
     [theme.breakpoints.down('xs')]: {
-      display: 'grid',
       gridColumn: '2 /span 10',
     },
-    searchBox__icon: {
-      [theme.breakpoints.down('xs')]: {
-        display: 'grid',
-        justifySelf: 'center',
-        gridColumn: '1 / span2',
-      },
-    },
+  },
+  iconBack: {
+    '&:hover': {},
   },
   searchBox__mobileContainer: {
     justifyContent: 'center',
@@ -151,7 +147,7 @@ function SearchBox({ startDate, initialLocationName, landingPage }) {
         aria-label='search'
         className={classes.searchBox__icon}
       >
-        <SearchIcon />
+        <SearchIcon className={classes.iconBack} />
       </IconButton>
     </div>
   );

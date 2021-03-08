@@ -1,4 +1,3 @@
-import 'date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import MomentUtils from '@date-io/moment';
 import {
@@ -9,11 +8,14 @@ import { useWindowSize } from 'utils/hooks';
 
 const useStyles = makeStyles((theme) => ({
   datePicker: {
+    width: '100%',
     justifySelf: 'Center',
     paddingLeft: 15,
+    paddingRight: 15,
+
     [theme.breakpoints.down('xs')]: {
       paddingLeft: 0,
-      width: '100%',
+      paddingRight: 0,
     },
   },
   input: {

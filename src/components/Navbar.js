@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
   Navbar__logo: {
     fontFamily: `${GlobalStyles.logo}`,
-    fontSize: 30,
+    fontSize: 40,
     color: `${GlobalStyles.accentOrange}`,
   },
 

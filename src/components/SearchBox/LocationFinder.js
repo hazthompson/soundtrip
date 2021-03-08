@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 8, //matching materialUI datepicker margin top and bottom for alignement
     [theme.breakpoints.up('s')]: {
       paddingRight: 15,
+      marginLeft: 15,
     },
     [theme.breakpoints.down('xs')]: {
       paddingTop: 15,
