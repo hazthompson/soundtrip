@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { useLocation } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import SpotifyLogin from 'components/SpotifyLogin';
 
 function AuthPage() {
   const location = useLocation();
@@ -23,11 +23,7 @@ function AuthPage() {
     }
   }, [location]);
 
-  return (
-    <Button href={SPOTIFY_AUTHORIZE_URL} variant='contained'>
-      Login with Spotify
-    </Button>
-  );
+  return <SpotifyLogin SPOTIFY_AUTHORIZE_URL={SPOTIFY_AUTHORIZE_URL} />;
 }
 
 export default AuthPage;
